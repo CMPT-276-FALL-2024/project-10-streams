@@ -1,0 +1,22 @@
+{
+  "name": "project-10-streams",
+  "version": "1.0.0",
+  "description": "PlanYourPlate website to help users find recipes that fit their lifestyle needs easily.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/CMPT-276-FALL-2024/project-10-streams.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CMPT-276-FALL-2024/project-10-streams/issues"
+  },
+  "homepage": "https://github.com/CMPT-276-FALL-2024/project-10-streams#readme"
+}
