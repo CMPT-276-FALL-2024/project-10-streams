@@ -1,0 +1,35 @@
+name: Deploy to Netlify
+
+on:
+  push:
+    branches: ["main"]
+    
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout main 
+        uses: actions/checkout@v4
+
+      - name: set up node.js
+        uses: actions/setup-node@v2
+        with: 
+          node-version: 18.x
+
+      - name: install dependencies
+        run: npm install
+
+      - name: build react.js
+        run: npm run build
+
+      - name: deploy
+        uses: nwtgck/actions-netlify@v1.1.4
+        with:
+          publish-dir: './build'
+          production-deploy: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
