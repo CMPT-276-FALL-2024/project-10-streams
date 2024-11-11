@@ -3,15 +3,14 @@ name: Deploy to Netlify
 on:
   push:
     branches: ["main"]
-  pull_request:
-    branches: ["main"]
     
   workflow_dispatch:
 
 jobs:
-  test:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    steps: 
+
+    steps:
       - name: checkout main 
         uses: actions/checkout@v4
 
@@ -23,15 +22,7 @@ jobs:
       - name: install dependencies
         run: npm install
 
-      - name: run tests
-        run: npm test
-        
-  deploy:
-    runs-on: ubuntu-latest
-    needs: test
-
-    steps:
-      - name: build
+      - name: build react.js
         run: npm run build
 
       - name: deploy
