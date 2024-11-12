@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,31 +24,49 @@ jobs:
       - name: install dependencies
         run: npm ci
 
-      - name: build react.js
+      - name: build
         run: npm run build
 
-      - name: run tests
-        env:
-          CI: true
-        run: npm test 
-
-      - name: upload build
-        uses: actions/upload-artifact@v4
-        with:
-          name: build
-          path: build
-
-  deploy:
+  test: 
     runs-on: ubuntu-latest
-    needs: build-and-test
+    needs: build
     steps:
       - name: checkout main 
         uses: actions/checkout@v4
 
-      - name: download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: build
+      - name: set up node.js
+        uses: actions/setup-node@v4
+        with: 
+          node-version: 18.x
+
+      - name: install dependencies
+        run: npm ci
+
+      - name: build
+        run: npm run build
+        
+      - name: run tests
+        env:
+          CI: true
+        run: npm test  
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: checkout main 
+        uses: actions/checkout@v4
+
+      - name: set up node.js
+        uses: actions/setup-node@v4
+        with: 
+          node-version: 18.x
+
+      - name: install dependencies
+        run: npm ci
+
+      - name: build react.js
+        run: npm run build
 
       - name: deploy
         uses: nwtgck/actions-netlify@v1.1.4
