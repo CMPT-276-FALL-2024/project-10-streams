@@ -28,7 +28,7 @@ jobs:
         run: npm run build
 
       - name: upload build
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: build
           path: build
@@ -52,7 +52,7 @@ jobs:
     needs: test
     steps:
       - name: download build artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: build
 
