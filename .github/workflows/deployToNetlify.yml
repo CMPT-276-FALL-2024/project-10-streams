@@ -38,7 +38,7 @@ jobs:
     needs: build
     steps:
       - name: download build artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: build
 
