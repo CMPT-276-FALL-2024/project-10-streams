@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function RecipeSection() {
     const recipes = [
@@ -37,9 +38,11 @@ function RecipeSection() {
             </div>
             
             <div className="flex justify-center">
-                <button className="bg-purple-500 text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-purple-600">
-                    Navigate to PlanYourRecipes
-                </button>
+            <Link to="/recipe-search">
+        <button className="bg-purple-500 text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-purple-600">
+          Navigate to PlanYourRecipes
+        </button>
+      </Link>
             </div>
         </section>
     );
