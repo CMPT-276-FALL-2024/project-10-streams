@@ -46,11 +46,6 @@ const RecipeSearch = () => {
 
   return (
     <div className="relative flex flex-col items-center justify-start h-full w-full p-4">
-      <Link to="/" className="absolute top-4 left-4">
-        <button className="bg-gray-500 text-white py-2 px-4 rounded">
-          Back to Home
-        </button>
-      </Link>
       <h1 className="text-3xl font-bold mb-4">Recipe Search</h1>
       <form onSubmit={handleSubmit} className="mb-4 w-full max-w-lg">
         <input
@@ -80,16 +75,20 @@ const RecipeSearch = () => {
         </button>
       </form>
       <div className="w-full flex flex-col items-center overflow-y-auto">
-        {recipes.map((recipe, index) => (
-          <div key={index} className="border p-4 mb-4 w-full max-w-lg bg-white rounded shadow">
-            <h2 className="text-xl font-bold mb-2">{recipe.recipe.label}</h2>
-            <img src={recipe.recipe.image} alt={recipe.recipe.label} className="w-full h-auto mb-2" />
-            <p className="mb-2">{recipe.recipe.source}</p>
-            <a href={recipe.recipe.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
-              View Recipe
-            </a>
-          </div>
-        ))}
+        {recipes.length > 0 ? (
+          recipes.map((recipe, index) => (
+            <div key={index} className="border p-4 mb-4 w-full max-w-lg bg-white rounded shadow">
+              <h2 className="text-xl font-bold mb-2">{recipe.recipe.label}</h2>
+              <img src={recipe.recipe.image} alt={recipe.recipe.label} className="w-full h-auto mb-2" />
+              <p className="mb-2">{recipe.recipe.source}</p>
+              <a href={recipe.recipe.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                View Recipe
+              </a>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-700">No recipes found. Please try a different search.</p>
+        )}
       </div>
     </div>
   );
