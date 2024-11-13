@@ -31,7 +31,7 @@ function MainContent() {
               <Tutorial />
             </>
           } />
-          <Route path="/recipe-search" element={<RecipeSearch />} />
+          <Route path="/plan-your-recipes" element={<RecipeSearch />} />
         </Routes>
       </main>
       

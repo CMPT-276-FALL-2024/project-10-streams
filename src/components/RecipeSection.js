@@ -38,7 +38,7 @@ function RecipeSection() {
             </div>
             
             <div className="flex justify-center">
-            <Link to="/recipe-search">
+            <Link to="/plan-your-recipes">
         <button className="bg-purple-500 text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-purple-600">
           Navigate to PlanYourRecipes
         </button>
