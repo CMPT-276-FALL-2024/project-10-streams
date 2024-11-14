@@ -14,6 +14,7 @@ const RecipeSearch = () => {
   const [query, setQuery] = useState('');
   const [recipes, setRecipes] = useState([]);
   const [selectedHealthLabels, setSelectedHealthLabels] = useState([]);
+  const [error, setError] = useState(null);//errortesting
 
   const APP_ID = '56715edc';
   const APP_KEY = 'cd0690b7b5e5cd977228e98ec2237a47';
@@ -35,6 +36,7 @@ const RecipeSearch = () => {
       console.log(response.data); // Log the response to the console
       setRecipes(response.data.hits);
     } catch (error) {
+      setError('Error fetching recipes');
       console.error('Error fetching the recipes:', error);
     }
   };
@@ -79,6 +81,9 @@ const RecipeSearch = () => {
           Search
         </button>
       </form>
+      {/*Displaying Error message, required for testing*/}
+      {error && <div className="text-red-500">{error}</div>}
+      {/*Displaying Error message */}
       <div className="w-full flex flex-col items-center overflow-y-auto">
         {recipes.map((recipe, index) => (
           <div key={index} className="border p-4 mb-4 w-full max-w-lg bg-white rounded shadow">
