@@ -5,6 +5,7 @@ import AboutSection from './components/AboutSection';
 import Tutorial from './components/RecipeSection';
 import Footer from './components/Footer';
 import RecipeSearch from './RecipeSearch';
+import AboutUs from './components/AboutUs';
 import './App.css';
 
 function App() {
@@ -32,6 +33,7 @@ function MainContent() {
             </>
           } />
           <Route path="/plan-your-recipes" element={<RecipeSearch />} />
+          <Route path="/about" element={<AboutUs />} />
         </Routes>
       </main>
       
