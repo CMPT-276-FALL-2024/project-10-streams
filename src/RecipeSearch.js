@@ -3,15 +3,21 @@ import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import {NextArrow, PrevArrow } from './CustomArrows'; // Import the custom arrow components
+import { NextArrow, PrevArrow } from './CustomArrows'; // Import the custom arrow components
 
 const APP_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
+const intolerancesList = [
+  'Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut', 'Wheat'
+];
+
 const RecipeSearch = () => {
   const [query, setQuery] = useState('');
+  const [intolerances, setIntolerances] = useState([]);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [showIntolerances, setShowIntolerances] = useState(false);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -19,6 +25,7 @@ const RecipeSearch = () => {
       const response = await axios.get('https://api.spoonacular.com/recipes/complexSearch', {
         params: {
           query: query,
+          intolerances: intolerances.join(','),
           apiKey: APP_KEY,
           addRecipeInformation: true, 
         },
@@ -29,6 +36,13 @@ const RecipeSearch = () => {
       setError(err);
       setData(null);
     }
+  };
+
+  const handleIntoleranceChange = (e) => {
+    const { value, checked } = e.target;
+    setIntolerances((prev) =>
+      checked ? [...prev, value] : prev.filter((intolerance) => intolerance !== value)
+    );
   };
 
   const fetchRecipeDetails = async (id) => {
@@ -55,7 +69,9 @@ const RecipeSearch = () => {
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    beforeChange: () => setSelectedRecipe(null), // Reset selectedRecipe on slide change
+    beforeChange: () => {
+      setSelectedRecipe(null);
+    }, // Reset selectedRecipe on slide change
   };
 
   return (
@@ -63,14 +79,41 @@ const RecipeSearch = () => {
       <h1 className="text-2xl font-bold mb-5 text-purple-700">
         Search Recipes
       </h1>
-      <form onSubmit={handleSearch} className="mb-5 flex items-center">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for recipes..."
-          className="bg-white p-2 w-full mb-2 border border-gray-300 rounded mr-2"
-        />
+      <form onSubmit={handleSearch} className="mb-5">
+        <div className="mb-4">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search for recipes..."
+            className="bg-white p-2 w-full mb-2 border border-gray-300 rounded"
+          />
+        </div>
+        <button
+          type="button"
+          onClick={() => setShowIntolerances(!showIntolerances)}
+          className="p-2 mb-2 border border-gray-300 rounded bg-purple-700 text-white"
+        >
+          Allergies?
+        </button>
+        {showIntolerances && (
+          <div className="mb-4">
+            <h3 className="text-lg font-semibold mb-2">Select Intolerances:</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {intolerancesList.map((intolerance) => (
+                <label key={intolerance} className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    value={intolerance}
+                    onChange={handleIntoleranceChange}
+                    className="form-checkbox h-4 w-4 text-purple-600"
+                  />
+                  <span>{intolerance}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
         <button type="submit" className="p-2 mb-2 border border-gray-300 rounded bg-purple-700 text-white">
           Search
         </button>
@@ -99,12 +142,11 @@ const RecipeSearch = () => {
           </Slider>
         </div>
       ) : (
-        <p>Loading...</p>
+        <p> Results will appear after completing a search!</p>
       )}
       {selectedRecipe && (
         <div className="mt-5 p-5 border border-gray-300 rounded">
           <h2 className="text-xl font-bold mb-4">{selectedRecipe.title}</h2>
-
           <p><strong>Servings:</strong> {selectedRecipe.servings}</p>
           <p><strong>Ready in:</strong> {selectedRecipe.readyInMinutes} minutes</p>
           <h3 className="text-lg font-semibold mt-4">Ingredients:</h3>
