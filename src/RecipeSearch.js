@@ -3,6 +3,7 @@ import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { NextArrow, PrevArrow } from './CustomArrows'; // Import the custom arrow components
 
 const APP_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
@@ -18,7 +19,7 @@ const RecipeSearch = () => {
         params: {
           query: query,
           apiKey: APP_KEY,
-          addRecipeInformation: true, // Include additional recipe information
+          addRecipeInformation: true, 
         },
       });
       setData(response.data);
@@ -35,8 +36,8 @@ const RecipeSearch = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    nextArrow: <button className="slick-next">Next</button>,
-    prevArrow: <button className="slick-prev">Previous</button>,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
   };
 
   return (
