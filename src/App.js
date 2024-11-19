@@ -1,23 +1,43 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import Header from './components/Header';
+import AboutSection from './components/AboutSection';
+import Tutorial from './components/RecipeSection';
+import Footer from './components/Footer';
+import RecipeSearch from './RecipeSearch';
+import AboutUs from './components/AboutUs';
 import './App.css';
 
 function App() {
   return (
+    <Router>
+      <MainContent />
+    </Router>
+  );
+}
+
+function MainContent() {
+  const location = useLocation();
+  const isRecipeSearchPage = location.pathname === '/recipe-search';
+
+  return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          PlanYourPlate website in progress.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!isRecipeSearchPage && <Header />}
+      
+      <main className={`container mx-auto px-4 flex flex-col items-center mt-10 ${isRecipeSearchPage ? 'overflow-y-auto' : ''}`}>
+        <Routes>
+          <Route path="/" element={
+            <>
+              <AboutSection />
+              <Tutorial />
+            </>
+          } />
+          <Route path="/plan-your-recipes" element={<RecipeSearch />} />
+          <Route path="/about" element={<AboutUs />} />
+        </Routes>
+      </main>
+      
+      {!isRecipeSearchPage && <Footer />}
     </div>
   );
 }
