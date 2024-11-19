@@ -47,7 +47,7 @@ jobs:
       - name: build
         run: npm run build
         env:
-          SPOONACULAR_API_KEY: ${{ secrets.REACT_APP_SPOONACULAR_API_KEY }}
+          SPOONACULAR_API_KEY: ${{ secrets.SPOONACULAR_API_KEY }}
         
       - name: run tests
         env:
