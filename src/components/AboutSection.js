@@ -19,7 +19,7 @@ function AboutSection() {
                 </p>
                 
                 <div className="w-1/3 flex justify-center items-center p-5  ml-4 bg-slate-200">
-                    <img src="img/Searching For Recipes.png" alt="Searching for recipes illustration" />
+                    <img src="img/Searching For Recipes.gif" alt="Searching for recipes illustration" />
                 </div>
             </div>
         </section>
