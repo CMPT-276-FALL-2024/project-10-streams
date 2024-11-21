@@ -3,7 +3,7 @@ import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { NextArrow, PrevArrow } from './CustomArrows'; // Import the custom arrow components
+import { NextArrow, PrevArrow } from './CustomArrows.js'; // Import the custom arrow components
 
 const APP_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
