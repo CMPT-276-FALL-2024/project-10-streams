@@ -32,6 +32,7 @@ jobs:
         run: npm run build
         env:
           REACT_APP_SPOONACULAR_API_KEY: ${{ secrets.SPOONACULAR_API_KEY }}
+          REACT_APP_GEMINI_API_KEY: ${{secrets.GEMINI_API_KEY}}
 
 
   test: 
@@ -53,6 +54,7 @@ jobs:
         run: npm run build
         env:
           REACT_APP_SPOONACULAR_API_KEY: ${{ secrets.SPOONACULAR_API_KEY }}
+          REACT_APP_GEMINI_API_KEY: ${{secrets.GEMINI_API_KEY}}
         
       - name: run tests
         env:

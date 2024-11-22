@@ -150,7 +150,7 @@ const MultimodalPrompt = () => {
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="w-full px-4 py-3 border border-purple-900 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none"
             />
             <label className="block text-purple-900 text-sm mb-2">Accepted formats: .png, .jpg</label>
           </div>

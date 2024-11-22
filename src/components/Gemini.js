@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
-import Slider from "react-slick";
 import axios from "axios";
+import Slider from "react-slick";
+
+
 import { NextArrow, PrevArrow } from "../CustomArrows";
 
 const GEMINI_API_KEY = "AIzaSyBGgNYaSBT5XJ28ynVGF4YDacQ-M7pZhj8";
- const SPOONACULAR_API_KEY = "edeac442622d478eb949264ef3e83be2";
+const SPOONACULAR_API_KEY = "edeac442622d478eb949264ef3e83be2";
 
 const MultimodalPrompt = () => {
   const [prompt, setPrompt] = useState("");
@@ -23,7 +25,7 @@ const MultimodalPrompt = () => {
     setLoading(true);
 
     try {
-      // Step 1: Ask Gemini for a comma-separated list of recipe names
+      // Step 1: Ask Gemini for recipes and general advice
       const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
       const model = genAI.getGenerativeModel({
         model: "gemini-1.5-flash",
@@ -35,51 +37,34 @@ const MultimodalPrompt = () => {
         ],
       });
 
-      const recipeQuery = [
+      const contents = [
         {
           role: "user",
           parts: [
             {
-              text: `Please return a comma-separated list of recipe names suitable for this situation: "${prompt}". Only return the list, nothing else.`,
+              text: `Please return recipe suggestions in two parts:
+1. A comma-separated list of recipe names for this situation: "${prompt}".
+2. General advice or additional context for these recipes.`,
             },
           ],
         },
       ];
 
-      let recipeBuffer = [];
-      const recipeResult = await model.generateContentStream({ contents: recipeQuery });
-      for await (let response of recipeResult.stream) {
-        recipeBuffer.push(response.text());
+      const result = await model.generateContentStream({ contents });
+      let buffer = [];
+      for await (let response of result.stream) {
+        buffer.push(response.text());
       }
 
-      const recipeList = recipeBuffer.join("").trim();
-      console.log("Gemini Recipe Response:", recipeList); // Log the raw Gemini response
+      const geminiResponse = buffer.join("");
+      const [recipeList, advice] = geminiResponse.split("\n\n"); // Separate recipes and advice
+      setGeneralAdvice(advice?.trim() || ""); // Store general advice
 
+      // Parse and clean the recipe list
       const recipeNames = recipeList.split(",").map((name) => name.trim()).filter(Boolean);
+      console.log(recipeNames);
 
-      // Step 2: Ask Gemini for general advice
-      const adviceQuery = [
-        {
-          role: "user",
-          parts: [
-            {
-              text: `Please provide general advice or context for recipes suitable for this situation: "${prompt}".`,
-            },
-          ],
-        },
-      ];
-
-      let adviceBuffer = [];
-      const adviceResult = await model.generateContentStream({ contents: adviceQuery });
-      for await (let response of adviceResult.stream) {
-        adviceBuffer.push(response.text());
-      }
-
-      const advice = adviceBuffer.join("").trim();
-      setGeneralAdvice(advice);
-
-      // Step 3: Fetch detailed recipe data from Spoonacular (Commented out for now)
-      
+      // Step 2: Fetch detailed recipe data from Spoonacular
       const spoonacularResults = await Promise.all(
         recipeNames.map(async (recipeName) => {
           try {
@@ -103,7 +88,6 @@ const MultimodalPrompt = () => {
 
       // Filter out invalid or null responses
       setRecipes(spoonacularResults.filter(Boolean));
-      
     } catch (error) {
       console.error("Error:", error);
     } finally {
@@ -130,23 +114,23 @@ const MultimodalPrompt = () => {
           <div className="flex flex-col items-center text-center">
             <div className="bg-white rounded-full p-4 shadow-lg mb-4">
               <img
-                src="/path/to/your/text-icon.png"
+                src="/img/picky-eater.png"
                 alt="Describe your situation"
-                className="w-16 h-16"
+                className="w-36 h-36"
               />
             </div>
-            <p className="text-lg text-gray-700 font-medium">Describe your situation</p>
+            <p className="text-lg text-purple-900 font-medium">Describe your situation</p>
           </div>
           <div className="hidden md:block text-purple-700 text-3xl">→</div>
           <div className="flex flex-col items-center text-center">
             <div className="bg-white rounded-full p-4 shadow-lg mb-4">
               <img
-                src="/path/to/your/recipe-icon.png"
+                src="/img/right-recipe.png"
                 alt="Get recipes"
-                className="w-16 h-16"
+                className="w-36 h-36"
               />
             </div>
-            <p className="text-lg text-gray-700 font-medium">Receive tailored recipes!</p>
+            <p className="text-lg text-purple-900 font-medium">Receive tailored recipes!</p>
           </div>
         </div>
       </div>
@@ -158,7 +142,7 @@ const MultimodalPrompt = () => {
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-gray-700 font-medium mb-2">Describe Your Situation</label>
+            <label className="block text-purple-900 font-medium mb-2">Describe Your Situation</label>
             <input
               type="text"
               value={prompt}
