@@ -5,7 +5,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { NextArrow, PrevArrow } from './CustomArrows.js'; // Import the custom arrow components
 
-const APP_KEY = "edeac442622d478eb949264ef3e83be2";
+const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
+console.log(process.env);
 
 const intolerancesList = [
   'Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut', 'Wheat'
@@ -26,7 +27,7 @@ const RecipeSearch = () => {
         params: {
           query: query,
           intolerances: intolerances.join(','),
-          apiKey: APP_KEY,
+          apiKey: SPOONACULAR_API_KEY,
           addRecipeInformation: true, 
         },
       });
@@ -49,7 +50,7 @@ const RecipeSearch = () => {
     try {
       const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`, {
         params: {
-          apiKey: APP_KEY,
+          apiKey: SPOONACULAR_API_KEY,
           includeNutrition: true, // Include nutrition data
         },
       });

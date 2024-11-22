@@ -6,8 +6,8 @@ import Slider from "react-slick";
 
 import { NextArrow, PrevArrow } from "../CustomArrows";
 
-const GEMINI_API_KEY = "AIzaSyBGgNYaSBT5XJ28ynVGF4YDacQ-M7pZhj8";
-const SPOONACULAR_API_KEY = "edeac442622d478eb949264ef3e83be2";
+const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
+const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
 const MultimodalPrompt = () => {
   const [prompt, setPrompt] = useState("");
