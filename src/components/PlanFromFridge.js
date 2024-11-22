@@ -114,7 +114,7 @@ const MultimodalPrompt = () => {
           <div className="flex flex-col items-center text-center">
             <div className="bg-white rounded-full p-4 shadow-lg mb-4">
               <img
-                src="/path/to/your/text-icon.png"
+                src="/img/picky-eater.png"
                 alt="Describe your situation"
                 className="w-16 h-16"
               />
@@ -125,7 +125,7 @@ const MultimodalPrompt = () => {
           <div className="flex flex-col items-center text-center">
             <div className="bg-white rounded-full p-4 shadow-lg mb-4">
               <img
-                src="/path/to/your/recipe-icon.png"
+                src="/img/right-recipe.png"
                 alt="Get recipes"
                 className="w-16 h-16"
               />
