@@ -6,6 +6,8 @@ import Tutorial from './components/RecipeSection';
 import Footer from './components/Footer';
 import RecipeSearch from './RecipeSearch';
 import AboutUs from './components/AboutUs';
+import Gemini from './components/Gemini';
+import PlanFromFridge from './components/PlanFromFridge';
 import './App.css';
 
 function App() {
@@ -32,7 +34,9 @@ function MainContent() {
               <Tutorial />
             </>
           } />
+          <Route path="/PlanYourMeals" element={<Gemini />} />
           <Route path="/plan-your-recipes" element={<RecipeSearch />} />
+          <Route path="/fridge" element={<PlanFromFridge />} />
           <Route path="/about" element={<AboutUs />} />
         </Routes>
       </main>
