@@ -11,7 +11,7 @@ const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
 const MultimodalPrompt = () => {
   const [file, setFile] = useState(null);
-  const [ingredients, setIngredients] = useState([]);
+  const [, setIngredients] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
 

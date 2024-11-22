@@ -2,12 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function RecipeSection() {
-    const recipes = [
-        { preference: 'No Nuts', name: 'Recipe with no nuts', link: '/' },
-        { preference: 'International', name: 'International Recipe', link: '/' },
-        { preference: 'Nutritional Value', name: 'Recipe from nutritional value', link: '/' },
-    ];
-
     return (
         <section className="p-10">
             <div className="flex flex-col items-center justify-center mb-10 py-10">
