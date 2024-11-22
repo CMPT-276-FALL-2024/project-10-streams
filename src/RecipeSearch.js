@@ -7,6 +7,7 @@ import { NextArrow, PrevArrow } from './CustomArrows'; // Import the custom arro
 
 const APP_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
+
 const intolerancesList = [
   'Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut', 'Wheat'
 ];
@@ -19,6 +20,7 @@ const RecipeSearch = () => {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [showIntolerances, setShowIntolerances] = useState(false);
 
+  
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
