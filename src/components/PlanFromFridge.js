@@ -152,6 +152,7 @@ const MultimodalPrompt = () => {
               onChange={handleFileChange}
               className="w-full px-4 py-3 border border-purple-900 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none"
             />
+            <label className="block text-purple-900 text-sm mb-2">Accepted formats: .png, .jpg</label>
           </div>
           <div>
             <button
@@ -169,24 +170,24 @@ const MultimodalPrompt = () => {
         {/* Recipe Slider */}
         {recipes.length > 0 && (
           <div className="mt-8">
-            <h3 className="text-xl font-bold mb-4 text-gray-700">Recipes:</h3>
+            <h3 className="text-xl font-bold mb-4 text-purple-900">Recipes:</h3>
             <Slider {...sliderSettings}>
               {recipes.map((recipe) => (
                 <div
                   key={recipe.id}
                   className="p-4 bg-gray-100 border border-gray-300 rounded-lg shadow"
                 >
-                  <h4 className="text-lg font-semibold text-center">{recipe.title}</h4>
+                  <h4 className="text-lg text-purple-900 font-semibold text-center">{recipe.title}</h4>
                   <img
                     src={`https://spoonacular.com/recipeImages/${recipe.id}-312x231.${recipe.imageType}`}
                     alt={recipe.title}
                     className="w-full h-auto max-h-64 object-contain rounded-md mt-2"
                   />
-                  <p className="mt-2 text-sm text-gray-600">
+                  <p className="mt-2 text-sm text-purple-900">
                     <strong>Used Ingredients:</strong>{" "}
                     {recipe.usedIngredients.map((ing) => ing.name).join(", ")}
                   </p>
-                  <p className="mt-1 text-sm text-gray-600">
+                  <p className="mt-1 text-sm text-purple-900">
                     <strong>Missed Ingredients:</strong>{" "}
                     {recipe.missedIngredients.map((ing) => ing.name).join(", ")}
                   </p>

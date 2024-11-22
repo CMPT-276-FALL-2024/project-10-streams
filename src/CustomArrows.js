@@ -15,7 +15,8 @@ const NextArrow = (props) => {
         borderRadius: '50%', 
         padding: '15px', 
         width: '40px', 
-        height: '40px' 
+        height: '40px',
+        zIndex: 10
       }}
       onClick={onClick}
     >
@@ -37,7 +38,8 @@ const PrevArrow = (props) => {
         borderRadius: '50%', 
         padding: '15px', 
         width: '40px', 
-        height: '40px' 
+        height: '40px', 
+        zIndex: 10
       }}
       onClick={onClick}
     >
