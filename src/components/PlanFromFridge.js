@@ -107,7 +107,7 @@ const MultimodalPrompt = () => {
             <div className="bg-white rounded-full p-4 shadow-lg mb-4">
               <img
                 src="/img/take-photo.png"
-                alt="Take a photo of ingredients"
+                alt=""
                 className="w-36 h-40"
               />
             </div>
@@ -118,7 +118,7 @@ const MultimodalPrompt = () => {
             <div className="bg-white rounded-full p-4 shadow-lg mb-4">
               <img
                 src="/img/upload-photo.png"
-                alt="Upload photo of ingredients"
+                alt=""
                 className="w-36 h-40"
               />
             </div>

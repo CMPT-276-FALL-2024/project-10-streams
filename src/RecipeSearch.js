@@ -6,7 +6,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import { NextArrow, PrevArrow } from './CustomArrows.js'; // Import the custom arrow components
 
 const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
-console.log(process.env);
 
 const intolerancesList = [
   'Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut', 'Wheat'
