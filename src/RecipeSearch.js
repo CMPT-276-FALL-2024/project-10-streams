@@ -25,6 +25,7 @@ const RecipeSearch = () => {
       const response = await axios.get('https://api.spoonacular.com/recipes/complexSearch', {
         params: {
           query: query,
+          number: 100,
           intolerances: intolerances.join(','),
           apiKey: APP_KEY,
           addRecipeInformation: true, 

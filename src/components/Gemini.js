@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import MarkdownIt from 'markdown-it';
 
-const API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
+const API_KEY = "AIzaSyBGgNYaSBT5XJ28ynVGF4YDacQ-M7pZhj8";
 
 const Chatbot = () => {
   const [question, setQuestion] = useState('');

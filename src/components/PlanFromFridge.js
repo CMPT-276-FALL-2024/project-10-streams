@@ -6,8 +6,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { NextArrow, PrevArrow } from "../CustomArrows";
 
-const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
-const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
+const GEMINI_API_KEY = "AIzaSyBGgNYaSBT5XJ28ynVGF4YDacQ-M7pZhj8";
+const SPOONACULAR_API_KEY = "edeac442622d478eb949264ef3e83be2";
 
 const MultimodalPrompt = () => {
   const [file, setFile] = useState(null);
@@ -181,11 +181,11 @@ const MultimodalPrompt = () => {
                     className="w-full h-auto max-h-64 object-contain rounded-md mt-2"
                   />
                   <p className="mt-2 text-sm text-gray-600">
-                    <strong>Used Ingredients:</strong>{" "}
+                    <strong>Identified ingredients being used:</strong>{" "}
                     {recipe.usedIngredients.map((ing) => ing.name).join(", ")}
                   </p>
                   <p className="mt-1 text-sm text-gray-600">
-                    <strong>Missed Ingredients:</strong>{" "}
+                    <strong>Ingredients you may not have:</strong>{" "}
                     {recipe.missedIngredients.map((ing) => ing.name).join(", ")}
                   </p>
                 </div>
