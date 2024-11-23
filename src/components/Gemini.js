@@ -7,7 +7,7 @@ import { NextArrow, PrevArrow } from "../CustomArrows";
 const GEMINI_API_KEY = "AIzaSyBGgNYaSBT5XJ28ynVGF4YDacQ-M7pZhj8";
  const SPOONACULAR_API_KEY = "edeac442622d478eb949264ef3e83be2";
 
-const MultimodalPrompt = () => {
+const Gemini = () => {
   const [prompt, setPrompt] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [generalAdvice, setGeneralAdvice] = useState(""); // General advice or suggestions
@@ -211,4 +211,4 @@ const MultimodalPrompt = () => {
   );
 };
 
-export default MultimodalPrompt;
+export default Gemini;
