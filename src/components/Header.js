@@ -24,6 +24,16 @@ function Header() {
               </a>
             </li>
             <li>
+              <a href="/plan-your-meals" className="hover:bg-orange-200 text-purple-700 font-semibold hover:text-purple-500 transition-colors px-4 py-1 rounded-full">
+                PlanYourMeals
+              </a>
+            </li>
+            <li>
+              <a href="/plan-from-your-fridge" className="hover:bg-orange-200 text-purple-700 font-semibold hover:text-purple-500 transition-colors px-4 py-1 rounded-full">
+                PlanFromYourFridge
+              </a>
+            </li>
+            <li>
               <a href="/about" className="hover:bg-orange-200 text-purple-700 font-semibold hover:text-purple-500 transition-colors px-4 py-1  rounded-full">
                 About us
               </a>
