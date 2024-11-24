@@ -103,6 +103,7 @@ const MultimodalPrompt = () => {
   };
 
   const fetchRecipeDetails = async (id) => {
+    setSelectedRecipe(null); // Reset selected recipe
     try {
       const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`, {
         params: {
@@ -124,6 +125,7 @@ const MultimodalPrompt = () => {
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
+    beforeChange: () => setSelectedRecipe(null), // Reset selected recipe when slider changes
   };
 
   return (
