@@ -2,9 +2,13 @@ name: Test and Deploy to Netlify
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
+      - staging
+
   pull_request:
-    branches: ["main"]
+    branches: 
+      - main
     
   workflow_dispatch:
 
@@ -27,7 +31,9 @@ jobs:
       - name: build
         run: npm run build
         env:
-          SPOONACULAR_API_KEY: ${{ secrets.SPOONACULAR_API_KEY }}
+          REACT_APP_SPOONACULAR_API_KEY: ${{ secrets.SPOONACULAR_API_KEY }}
+          REACT_APP_GEMINI_API_KEY: ${{secrets.GEMINI_API_KEY}}
+
 
   test: 
     runs-on: ubuntu-latest
@@ -47,7 +53,8 @@ jobs:
       - name: build
         run: npm run build
         env:
-          SPOONACULAR_API_KEY: ${{ secrets.SPOONACULAR_API_KEY }}
+          REACT_APP_SPOONACULAR_API_KEY: ${{ secrets.SPOONACULAR_API_KEY }}
+          REACT_APP_GEMINI_API_KEY: ${{secrets.GEMINI_API_KEY}}
         
       - name: run tests
         env:
