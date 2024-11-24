@@ -16,22 +16,6 @@ function RecipeSection() {
         <h2 className="text-3xl font-bold text-purple-900 text-center mb-8">Which one best describes your situation?</h2>
         <div className="flex flex-col md:flex-row justify-center items-center gap-8">
           <div className="flex flex-col items-center text-center">
-          <p className="text-lg text-purple-900 font-medium">Have a picky eater in your home?</p>
-          <br></br>
-            <div className="bg-white rounded-full p-4 shadow-lg mb-4">
-              <img
-                src="/img/picky-eater.png"
-                alt=""
-                className="w-48 h-48"
-              />
-            </div>
-            <br></br>
-            <Link to="/planyourMeals" className="bg-purple-900 text-white px-6 py-3 rounded-md hover:bg-purple-700 transition-colors duration-200">
-                Navigate to PlanYourMeals
-            </Link>
-          </div>
-          <br></br>
-          <div className="flex flex-col items-center text-center">
           <p className="text-lg text-purple-900 font-medium">Know what you want when you see it?</p>
           <br></br>
             <div className="bg-white rounded-full p-4 shadow-lg mb-4">
@@ -44,6 +28,22 @@ function RecipeSection() {
             <br></br>
             <Link to="/plan-your-recipes" className="bg-purple-900 text-white px-6 py-3 rounded-md hover:bg-purple-700 transition-colors duration-200">
                 Navigate to PlanYourRecipes
+            </Link>
+          </div>
+          <br></br>
+          <div className="flex flex-col items-center text-center">
+          <p className="text-lg text-purple-900 font-medium">Have a picky eater in your home?</p>
+          <br></br>
+            <div className="bg-white rounded-full p-4 shadow-lg mb-4">
+              <img
+                src="/img/picky-eater.png"
+                alt=""
+                className="w-48 h-48"
+              />
+            </div>
+            <br></br>
+            <Link to="/planyourMeals" className="bg-purple-900 text-white px-6 py-3 rounded-md hover:bg-purple-700 transition-colors duration-200">
+                Navigate to PlanYourMeals
             </Link>
           </div>
           <br></br>

@@ -8,6 +8,6 @@ module.exports = {
     "^.+\\.(js|jsx)$": "babel-jest"
   },
   // Use ESM extensions
-  extensionsToTreatAsEsm: [".jsx", ".js"]
+  extensionsToTreatAsEsm: [".jsx"]
 };
 

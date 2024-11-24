@@ -52,7 +52,7 @@ const MultimodalPrompt = () => {
           role: "user",
           parts: [
             { inline_data: { mime_type: "image/jpeg", data: imageBase64 } },
-            { text: "What ingredients are in this photo?" },
+            { text: "List only the ingredients in this photo like a shopping list. Don't add a title; just the list" },
           ],
         },
       ];
@@ -65,6 +65,7 @@ const MultimodalPrompt = () => {
 
       const analyzedIngredients = buffer.join("").toLowerCase().split(", ");
       setIngredients(analyzedIngredients);
+      console.log(analyzedIngredients)
 
       const spoonacularResponse = await axios.get(
         "https://api.spoonacular.com/recipes/findByIngredients",
@@ -77,8 +78,8 @@ const MultimodalPrompt = () => {
         }
       );
       const filteredRecipes = spoonacularResponse.data.filter(
-        (recipe) => recipe.missedIngredients.length < 3
-      );
+        (recipe) => recipe.missedIngredients.length < 7
+      ).slice(0,5);
       setRecipes(filteredRecipes);
     } catch (error) {
       console.error("Error:", error);
