@@ -15,9 +15,27 @@ const MultimodalPrompt = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [done, setDone] = useState(false);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
+    setDone(false);
+    setSelectedRecipe(null);
+  };
+
+  const fetchRecipeDetails = async (id) => {
+    setSelectedRecipe(null); // Reset selected recipe
+    try {
+      const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`, {
+        params: {
+          apiKey: SPOONACULAR_API_KEY,
+          includeNutrition: true, // Include nutrition data
+        },
+      });
+      setSelectedRecipe(response.data);
+    } catch (error) {
+      console.error("Error fetching recipe details:", error);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -28,6 +46,7 @@ const MultimodalPrompt = () => {
     }
 
     setLoading(true);
+    setSelectedRecipe(null);
 
     try {
       const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
@@ -75,7 +94,7 @@ const MultimodalPrompt = () => {
             ingredients: analyzedIngredients.join(","),
             number: 50,
             apiKey: SPOONACULAR_API_KEY,
-            addRecipeInformation: true
+            addRecipeInformation: true,
           },
         }
       );
@@ -87,6 +106,7 @@ const MultimodalPrompt = () => {
       console.error("Error:", error);
     } finally {
       setLoading(false);
+      setDone(true);
     }
   };
 
@@ -106,7 +126,7 @@ const MultimodalPrompt = () => {
   };
 
   const sliderSettings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -177,9 +197,8 @@ const MultimodalPrompt = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full px-6 py-3 font-bold text-white rounded-lg transition ${
-                loading ? "bg-purple-300 cursor-not-allowed" : "bg-purple-600 hover:bg-purple-700"
-              }`}
+              className={`w-full px-6 py-3 font-bold text-white rounded-lg transition ${loading ? "bg-purple-300 cursor-not-allowed" : "bg-purple-600 hover:bg-purple-700"
+                }`}
             >
               {loading ? "Analyzing..." : "Analyze and Get Recipes"}
             </button>
@@ -187,7 +206,44 @@ const MultimodalPrompt = () => {
         </form>
 
         {/* Recipe Slider */}
-        {recipes.length > 0 && (
+        {recipes.length === 0
+          && done && (
+            <div className="mt-8">
+              <p className="text-lg text-purple-900">
+                No recipes found. Please try again with a different photo.
+              </p>
+            </div>)}
+        {recipes.length === 1
+          && (
+            <div className="mt-8">
+              <h3 className="text-xl font-bold mb-4 text-purple-900">One Recipe Found:</h3>
+              <div
+                key={recipes[0].id}
+                className="p-4 bg-gray-100 border border-gray-300 rounded-lg shadow"
+              >
+                <h4 className="text-lg text-purple-900 font-semibold text-center">{recipes[0].title}</h4>
+                <img
+                  src={`https://spoonacular.com/recipeImages/${recipes[0].id}-312x231.${recipes[0].imageType}`}
+                  alt={recipes[0].title}
+                  className="w-full h-auto max-h-64 object-contain rounded-md mt-2"
+                />
+                <p className="mt-2 text-sm text-purple-900">
+                  <strong>Used Ingredients:</strong>{" "}
+                  {recipes[0].usedIngredients.map((ing) => ing.name).join(", ")}
+                </p>
+                <p className="mt-1 text-sm text-purple-900">
+                  <strong>Missed Ingredients:</strong>{" "}
+                  {recipes[0].missedIngredients.map((ing) => ing.name).join(", ")}
+                </p>
+                <button
+                  onClick={() => fetchRecipeDetails(recipes[0].id)}
+                  className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg"
+                >
+                  View Details
+                </button>
+              </div>
+            </div>)}
+        {recipes.length > 1 && (
           <div className="mt-8">
             <h3 className="text-xl font-bold mb-4 text-purple-900">Recipes:</h3>
             <Slider {...sliderSettings}>
@@ -221,30 +277,29 @@ const MultimodalPrompt = () => {
             </Slider>
           </div>
         )}
-
         {/* Selected Recipe Details */}
         {selectedRecipe && (
-           <div className="mt-5 p-5 border border-gray-300 rounded">
-           <h2 className="text-xl font-bold mb-4">{selectedRecipe.title}</h2>
-           <p><strong>Servings:</strong> {selectedRecipe.servings}</p>
-           <p><strong>Ready in:</strong> {selectedRecipe.readyInMinutes} minutes</p>
-           <h3 className="text-lg font-semibold mt-4">Ingredients:</h3>
-           <ul className="list-disc list-inside">
-             {selectedRecipe.extendedIngredients.map((ingredient) => (
-               <li key={ingredient.id}>{ingredient.original}</li>
-             ))}
-           </ul>
-           <h3 className="text-lg font-semibold mt-4">Instructions:</h3>
-           <ol className="list-decimal list-inside">
-             {selectedRecipe.analyzedInstructions.length > 0 ? (
-               selectedRecipe.analyzedInstructions[0].steps.map((step) => (
-                 <li key={step.number}>{step.step}</li>
-               ))
-             ) : (
-               <li>{selectedRecipe.instructions}</li>
-             )}
-           </ol>
-         </div>
+          <div className="mt-5 p-5 border border-gray-300 rounded">
+            <h2 className="text-xl font-bold mb-4">{selectedRecipe.title}</h2>
+            <p><strong>Servings:</strong> {selectedRecipe.servings}</p>
+            <p><strong>Ready in:</strong> {selectedRecipe.readyInMinutes} minutes</p>
+            <h3 className="text-lg font-semibold mt-4">Ingredients:</h3>
+            <ul className="list-disc list-inside">
+              {selectedRecipe.extendedIngredients.map((ingredient) => (
+                <li key={ingredient.id}>{ingredient.original}</li>
+              ))}
+            </ul>
+            <h3 className="text-lg font-semibold mt-4">Instructions:</h3>
+            <ol className="list-decimal list-inside">
+              {selectedRecipe.analyzedInstructions.length > 0 ? (
+                selectedRecipe.analyzedInstructions[0].steps.map((step) => (
+                  <li key={step.number}>{step.step}</li>
+                ))
+              ) : (
+                <li>{selectedRecipe.instructions}</li>
+              )}
+            </ol>
+          </div>
         )}
       </div>
     </div>

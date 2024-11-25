@@ -13,6 +13,7 @@ const MultimodalPrompt = () => {
   const [generalAdvice, setGeneralAdvice] = useState(""); // General advice or suggestions
   const [loading, setLoading] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [done, setDone] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,8 +21,8 @@ const MultimodalPrompt = () => {
       alert("Please describe your situation.");
       return;
     }
-
     setLoading(true);
+    setDone(true);
 
     try {
       // Step 1: Ask Gemini for recipes and general advice
@@ -43,7 +44,7 @@ const MultimodalPrompt = () => {
             {
               text: `Please return recipe suggestions in two parts:
 1. A comma-separated list of recipe names for this situation: "${prompt}".
-2. General advice or additional context for these recipes.`,
+2. General advice or additional context for these recipes. Do not reference specific recipes.`,
             },
           ],
         },
@@ -60,8 +61,9 @@ const MultimodalPrompt = () => {
 
       // Format the advice with bullet points
       const formattedAdvice = advice
+        .replace("2.", "")
         .split("\n")
-        .map((line) => `- ${line.trim()}`)
+        .map((line) => ` ${line.trim()}`)
         .join("\n");
 
       setGeneralAdvice(formattedAdvice || ""); // Store formatted general advice
@@ -99,6 +101,22 @@ const MultimodalPrompt = () => {
       console.error("Error:", error);
     } finally {
       setLoading(false);
+      setDone(true);
+    }
+  };
+
+  const fetchRecipeDetails = async (id) => {
+    setSelectedRecipe(null); // Reset selected recipe
+    try {
+      const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`, {
+        params: {
+          apiKey: SPOONACULAR_API_KEY,
+          includeNutrition: true, // Include nutrition data
+        },
+      });
+      setSelectedRecipe(response.data);
+    } catch (error) {
+      console.error("Error fetching recipe details:", error);
     }
   };
 
@@ -196,28 +214,83 @@ const MultimodalPrompt = () => {
         )}
 
         {/* Recipe Slider */}
-        {recipes.length > 0 && (
-          <div className="mt-8">
-            <h3 className="text-xl font-bold mb-4 text-gray-700">Recipes:</h3>
-            <Slider {...sliderSettings}>
-              {recipes.map((recipe) => (
-                <div key={recipe.id} className="p-4 bg-gray-100 border border-gray-300 rounded-lg shadow">
-                  <h4 className="text-lg font-semibold text-center">{recipe.title}</h4>
-                  <img
-                    src={recipe.image}
-                    alt={recipe.title}
-                    className="w-full h-auto max-h-64 object-contain rounded-md mt-2"
-                  />
-                  <button
-                    onClick={() => fetchRecipeDetails(recipe.id)}
-                    className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg"
-                  >
-                    View Details
-                  </button>
-                </div>
-              ))}
-            </Slider>
-          </div>
+        {recipes.length === 0
+          && done && (
+            <div className="mt-8">
+              <p className="text-lg text-purple-900">
+                No recipes found. Please try a new prompt.
+              </p>
+            </div>)}
+        {recipes.length === 1
+          && (
+            <div className="mt-8">
+              <h3 className="text-xl font-bold mb-4 text-purple-900">One Recipe Found:</h3>
+              <div
+                key={recipes[0].id}
+                className="p-4 bg-gray-100 border border-gray-300 rounded-lg shadow"
+              >
+                <h4 className="text-lg text-purple-900 font-semibold text-center">{recipes[0].title}</h4>
+                <img
+                  src={`https://spoonacular.com/recipeImages/${recipes[0].id}-312x231.${recipes[0].imageType}`}
+                  alt={recipes[0].title}
+                  className="w-full h-auto max-h-64 object-contain rounded-md mt-2"
+                />
+                <button
+                  onClick={() => fetchRecipeDetails(recipes[0].id)}
+                  className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg"
+                >
+                  View Details
+                </button>
+              </div>
+            </div>)}
+        {recipes.length > 1 && (
+            <div className="mt-8">
+              <h3 className="text-xl font-bold mb-4 text-gray-700">Recipes:</h3>
+              <Slider {...sliderSettings}>
+                {recipes.map((recipe) => (
+                  <div key={recipe.id} className="p-4 bg-gray-100 border border-gray-300 rounded-lg shadow">
+                    <h4 className="text-lg font-semibold text-center">{recipe.title}</h4>
+                    <img
+                      src={recipe.image}
+                      alt={recipe.title}
+                      className="w-full h-auto max-h-64 object-contain rounded-md mt-2"
+                    />
+                    <button
+                      onClick={() => fetchRecipeDetails(recipe.id)}
+                      className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg"
+                    >
+                      View Details
+                    </button>
+                  </div>
+                ))}
+              </Slider>
+            </div>
+          )}
+
+
+        {/* Selected Recipe Details */}
+        {selectedRecipe && (
+           <div className="mt-5 p-5 border border-gray-300 rounded">
+           <h2 className="text-xl font-bold mb-4">{selectedRecipe.title}</h2>
+           <p><strong>Servings:</strong> {selectedRecipe.servings}</p>
+           <p><strong>Ready in:</strong> {selectedRecipe.readyInMinutes} minutes</p>
+           <h3 className="text-lg font-semibold mt-4">Ingredients:</h3>
+           <ul className="list-disc list-inside">
+             {selectedRecipe.extendedIngredients.map((ingredient) => (
+               <li key={ingredient.id}>{ingredient.original}</li>
+             ))}
+           </ul>
+           <h3 className="text-lg font-semibold mt-4">Instructions:</h3>
+           <ol className="list-decimal list-inside">
+             {selectedRecipe.analyzedInstructions.length > 0 ? (
+               selectedRecipe.analyzedInstructions[0].steps.map((step) => (
+                 <li key={step.number}>{step.step}</li>
+               ))
+             ) : (
+               <li>{selectedRecipe.instructions}</li>
+             )}
+           </ol>
+         </div>
         )}
 
         {/* Selected Recipe Details */}
