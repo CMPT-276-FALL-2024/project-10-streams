@@ -192,8 +192,7 @@ const MultimodalPrompt = () => {
         </form>
 
         {/* Recipe Slider */}
-        {recipes.length === 0
-          && done && (
+        {recipes.length === 0 && done && loading === false && (
             <div className="mt-8">
               <p className="text-lg text-purple-900">
                 No recipes found. Please try again with a different photo.

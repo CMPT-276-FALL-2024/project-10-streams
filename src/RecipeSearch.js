@@ -156,7 +156,7 @@ const RecipeSearch = () => {
           </button>
         </form>
         {error && <p className="text-red-500">Error: {error.message}</p>}
-        {data && data.results.length === 0 && (
+        {data && data.results.length === 0 && loading === false && (
           <div>
             <p>No recipes found. Please try again with different preferences.</p>
           </div>

@@ -194,14 +194,13 @@ const MultimodalPrompt = () => {
         {/* General Advice */}
         {generalAdvice && (
           <div className="mt-8">
-            <h3 className="text-xl font-bold mb-4 text-gray-700">General Advice:</h3>
+            <h3 className="text-xl font-bold mb-4 text-purple-900">General Advice:</h3>
             <p className="text-gray-600">{generalAdvice}</p>
           </div>
         )}
 
         {/* Recipe Slider */}
-        {recipes.length === 0
-          && done && (
+        {recipes.length === 0 && done && loading === false && (
             <div className="mt-8">
               <p className="text-lg text-purple-900">
                 No recipes found. Please try a new prompt.
@@ -231,11 +230,11 @@ const MultimodalPrompt = () => {
             </div>)}
         {recipes.length > 1 && (
             <div className="mt-8">
-              <h3 className="text-xl font-bold mb-4 text-gray-700">Recipes:</h3>
+              <h3 className="text-xl font-bold mb-4 text-purple-900">Recipes:</h3>
               <Slider {...sliderSettings}>
                 {recipes.map((recipe) => (
                   <div key={recipe.id} className="p-4 bg-gray-100 border border-gray-300 rounded-lg shadow">
-                    <h4 className="text-lg font-semibold text-center">{recipe.title}</h4>
+                    <h4 className="text-lg text-purple-900 font-semibold text-center">{recipe.title}</h4>
                     <img
                       src={recipe.image}
                       alt={recipe.title}
