@@ -23,20 +23,6 @@ const MultimodalPrompt = () => {
     setSelectedRecipe(null);
   };
 
-  const fetchRecipeDetails = async (id) => {
-    setSelectedRecipe(null); // Reset selected recipe
-    try {
-      const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`, {
-        params: {
-          apiKey: SPOONACULAR_API_KEY,
-          includeNutrition: true, // Include nutrition data
-        },
-      });
-      setSelectedRecipe(response.data);
-    } catch (error) {
-      console.error("Error fetching recipe details:", error);
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
