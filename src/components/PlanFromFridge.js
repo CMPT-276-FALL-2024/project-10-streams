@@ -14,9 +14,25 @@ const MultimodalPrompt = () => {
   const [, setIngredients] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
+  };
+
+  const fetchRecipeDetails = async (id) => {
+    setSelectedRecipe(null); // Reset selected recipe
+    try {
+      const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`, {
+        params: {
+          apiKey: SPOONACULAR_API_KEY,
+          includeNutrition: true, // Include nutrition data
+        },
+      });
+      setSelectedRecipe(response.data);
+    } catch (error) {
+      console.error("Error fetching recipe details:", error);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -73,6 +89,7 @@ const MultimodalPrompt = () => {
             ingredients: analyzedIngredients.join(","),
             number: 50,
             apiKey: SPOONACULAR_API_KEY,
+            addRecipeInformation: true,
           },
         }
       );
@@ -95,6 +112,7 @@ const MultimodalPrompt = () => {
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
+    beforeChange: () => setSelectedRecipe(null),
   };
 
   return (
@@ -191,10 +209,40 @@ const MultimodalPrompt = () => {
                     <strong>Missed Ingredients:</strong>{" "}
                     {recipe.missedIngredients.map((ing) => ing.name).join(", ")}
                   </p>
+                  <button
+                    onClick={() => fetchRecipeDetails(recipe.id)}
+                    className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg"
+                  >
+                    View Details
+                  </button>
                 </div>
               ))}
             </Slider>
           </div>
+          )}
+        {/* Selected Recipe Details */}
+        {selectedRecipe && (
+        <div className="mt-5 p-5 border border-gray-300 rounded">
+          <h2 className="text-xl font-bold mb-4">{selectedRecipe.title}</h2>
+          <p><strong>Servings:</strong> {selectedRecipe.servings}</p>
+          <p><strong>Ready in:</strong> {selectedRecipe.readyInMinutes} minutes</p>
+          <h3 className="text-lg font-semibold mt-4">Ingredients:</h3>
+          <ul className="list-disc list-inside">
+            {selectedRecipe.extendedIngredients.map((ingredient) => (
+              <li key={ingredient.id}>{ingredient.original}</li>
+            ))}
+          </ul>
+          <h3 className="text-lg font-semibold mt-4">Instructions:</h3>
+          <ol className="list-decimal list-inside">
+            {selectedRecipe.analyzedInstructions.length > 0 ? (
+              selectedRecipe.analyzedInstructions[0].steps.map((step) => (
+                <li key={step.number}>{step.step}</li>
+              ))
+            ) : (
+              <li>{selectedRecipe.instructions}</li>
+            )}
+          </ol>
+        </div>
         )}
       </div>
     </div>
