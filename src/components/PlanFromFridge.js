@@ -72,7 +72,7 @@ const MultimodalPrompt = () => {
           role: "user",
           parts: [
             { inline_data: { mime_type: "image/jpeg", data: imageBase64 } },
-            { text: "What ingredients are in this photo?" },
+            { text: "List only the ingredients in this photo like a shopping list. Don't add a title; just the list" },
           ],
         },
       ];
@@ -85,6 +85,7 @@ const MultimodalPrompt = () => {
 
       const analyzedIngredients = buffer.join("").toLowerCase().split(", ");
       setIngredients(analyzedIngredients);
+      console.log(analyzedIngredients)
 
       const spoonacularResponse = await axios.get(
         "https://api.spoonacular.com/recipes/findByIngredients",
@@ -98,14 +99,29 @@ const MultimodalPrompt = () => {
         }
       );
       const filteredRecipes = spoonacularResponse.data.filter(
-        (recipe) => recipe.missedIngredients.length < 3
-      );
+        (recipe) => recipe.missedIngredients.length < 7
+      ).slice(0,5);
       setRecipes(filteredRecipes);
     } catch (error) {
       console.error("Error:", error);
     } finally {
       setLoading(false);
       setDone(true);
+    }
+  };
+
+  const fetchRecipeDetails = async (id) => {
+    setSelectedRecipe(null); // Reset selected recipe
+    try {
+      const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`, {
+        params: {
+          apiKey: SPOONACULAR_API_KEY,
+          includeNutrition: true, // Include nutrition data
+        },
+      });
+      setSelectedRecipe(response.data);
+    } catch (error) {
+      console.error("Error fetching recipe details:", error);
     }
   };
 
@@ -117,7 +133,7 @@ const MultimodalPrompt = () => {
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    beforeChange: () => setSelectedRecipe(null),
+    beforeChange: () => setSelectedRecipe(null), // Reset selected recipe when slider changes
   };
 
   return (
