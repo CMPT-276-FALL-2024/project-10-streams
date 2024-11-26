@@ -6,6 +6,8 @@
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
+    "@fortawesome/free-solid-svg-icons": "^6.7.1",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@google/generative-ai": "^0.21.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -15,6 +17,7 @@
     "caniuse-api": "^3.0.0",
     "css-loader": "^7.1.2",
     "customize-cra": "^1.0.0",
+    "i": "^0.3.7",
     "markdown-it": "^14.1.0",
     "querystring-es3": "^0.2.1",
     "react": "^18.3.1",
@@ -56,6 +59,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "matchmedia-polyfill": "^0.3.2",
     "tailwindcss": "^3.4.14",
     "vite": "^5.4.11"
   }
