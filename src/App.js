@@ -23,10 +23,12 @@ function MainContent() {
   const isRecipeSearchPage = location.pathname === '/recipe-search';
 
   return (
-    <div className="App">
+    <div className="flex flex-col min-h-screen">
+      {/* Header */}
       {!isRecipeSearchPage && <Header />}
       
-      <main className={`container mx-auto px-4 flex flex-col min-h-screen items-center mt-10 ${isRecipeSearchPage ? 'overflow-y-auto' : ''}`}>
+      {/* Main Content */}
+      <main className={`container mx-auto px-4 flex flex-col items-center mt-10 flex-grow ${isRecipeSearchPage ? 'overflow-y-auto' : ''}`}>
         <Routes>
           <Route path="/" element={
             <>
@@ -41,9 +43,11 @@ function MainContent() {
         </Routes>
       </main>
       
+      {/* Footer */}
       {!isRecipeSearchPage && <Footer />}
     </div>
   );
 }
+
 
 export default App;
