@@ -3,7 +3,7 @@ describe('Basic Jest Test', () => {
       expect(true).toBe(true);
     });
   });
-  //*************************************************the Test test */
+  //*************************************************ensure jest library test */
   import React from 'react';
   import { render, screen, fireEvent, waitFor } from '@testing-library/react';
   import RecipeSearch from './RecipeSearch';
