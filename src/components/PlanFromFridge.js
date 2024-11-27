@@ -58,7 +58,7 @@ const MultimodalPrompt = () => {
           role: "user",
           parts: [
             { inline_data: { mime_type: "image/jpeg", data: imageBase64 } },
-            { text: "List only the ingredients in this photo like a shopping list. Don't add a title; just the list" },
+            { text: "List only the ingredients in this photo, separated by commas. Do not add any bullet points, asterisks, titles, or newlines; just list the ingredients." },
           ],
         },
       ];
@@ -69,24 +69,28 @@ const MultimodalPrompt = () => {
         buffer.push(response.text());
       }
 
-      const analyzedIngredients = buffer.join("").toLowerCase().split(", ");
-      setIngredients(analyzedIngredients);
-      console.log(analyzedIngredients)
+      const analyzedIngredients = buffer
+        .join("")
+        .toLowerCase()
+        .replace(/[*\n]/g, "") 
+        .split(", ")           
+        .map(ingredient => ingredient.trim());
 
-      const spoonacularResponse = await axios.get(
-        "https://api.spoonacular.com/recipes/findByIngredients",
-        {
-          params: {
-            ingredients: analyzedIngredients.join(","),
-            number: 50,
-            apiKey: SPOONACULAR_API_KEY,
-            addRecipeInformation: true,
-          },
-        }
-      );
-      const filteredRecipes = spoonacularResponse.data.filter(
-        (recipe) => recipe.missedIngredients.length < 7
-      ).slice(0,5);
+      setIngredients(analyzedIngredients);
+      console.log(analyzedIngredients);
+
+      const sanitizedIngredients = analyzedIngredients.map(ingredient => ingredient.trim());
+      console.log(sanitizedIngredients);
+      const queryString = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(
+      sanitizedIngredients.join(",")
+      )}&number=50&apiKey=${SPOONACULAR_API_KEY}&addRecipeInformation=true`;
+    
+      const spoonacularResponse = await axios.get(queryString);
+    
+      const filteredRecipes = spoonacularResponse.data
+        .filter((recipe) => recipe.missedIngredients.length < 7)
+        .slice(0, 5);
+    
       setRecipes(filteredRecipes);
     } catch (error) {
       console.error("Error:", error);
