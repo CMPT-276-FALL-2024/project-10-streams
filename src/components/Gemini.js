@@ -133,7 +133,7 @@ const MultimodalPrompt = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-6">
+    <div className=" bg-gray-50 py-12 px-6">
       {/* How It Works Section */}
       <div className="bg-purple-50 py-10 px-6 mb-12 rounded-lg shadow-md">
         <h2 className="text-3xl font-bold text-purple-700 text-center mb-8">How It Works</h2>
@@ -252,31 +252,6 @@ const MultimodalPrompt = () => {
             </div>
           )}
 
-
-        {/* Selected Recipe Details */}
-        {selectedRecipe && (
-           <div className="mt-5 p-5 border border-gray-300 rounded">
-           <h2 className="text-xl font-bold mb-4">{selectedRecipe.title}</h2>
-           <p><strong>Servings:</strong> {selectedRecipe.servings}</p>
-           <p><strong>Ready in:</strong> {selectedRecipe.readyInMinutes} minutes</p>
-           <h3 className="text-lg font-semibold mt-4">Ingredients:</h3>
-           <ul className="list-disc list-inside">
-             {selectedRecipe.extendedIngredients.map((ingredient) => (
-               <li key={ingredient.id}>{ingredient.original}</li>
-             ))}
-           </ul>
-           <h3 className="text-lg font-semibold mt-4">Instructions:</h3>
-           <ol className="list-decimal list-inside">
-             {selectedRecipe.analyzedInstructions.length > 0 ? (
-               selectedRecipe.analyzedInstructions[0].steps.map((step) => (
-                 <li key={step.number}>{step.step}</li>
-               ))
-             ) : (
-               <li>{selectedRecipe.instructions}</li>
-             )}
-           </ol>
-         </div>
-        )}
 
         {/* Selected Recipe Details */}
         {selectedRecipe && (
