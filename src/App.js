@@ -26,7 +26,7 @@ function MainContent() {
     <div className="App">
       {!isRecipeSearchPage && <Header />}
       
-      <main className={`container mx-auto px-4 flex flex-col items-center mt-10 ${isRecipeSearchPage ? 'overflow-y-auto' : ''}`}>
+      <main className={`container mx-auto px-4 flex flex-col min-h-screen items-center mt-10 ${isRecipeSearchPage ? 'overflow-y-auto' : ''}`}>
         <Routes>
           <Route path="/" element={
             <>
