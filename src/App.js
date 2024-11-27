@@ -8,6 +8,7 @@ import RecipeSearch from './RecipeSearch';
 import AboutUs from './components/AboutUs';
 import Gemini from './components/Gemini';
 import PlanFromFridge from './components/PlanFromFridge';
+import Navigate from './components/Navigate';
 import './App.css';
 
 function App() {
@@ -45,6 +46,7 @@ function MainContent() {
       
       {/* Footer */}
       {!isRecipeSearchPage && <Footer />}
+      <Navigate />
     </div>
   );
 }
