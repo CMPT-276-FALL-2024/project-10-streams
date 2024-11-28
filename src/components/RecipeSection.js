@@ -42,7 +42,7 @@ function RecipeSection() {
               />
             </div>
             <br></br>
-            <Link to="/planyourMeals" className="bg-purple-900 text-white px-6 py-3 rounded-md hover:bg-purple-700 transition-colors duration-200">
+            <Link to="/plan-your-meals" className="bg-purple-900 text-white px-6 py-3 rounded-md hover:bg-purple-700 transition-colors duration-200">
                 Navigate to PlanYourMeals
             </Link>
           </div>
@@ -58,7 +58,7 @@ function RecipeSection() {
               />
             </div>
             <br></br>
-            <Link to="/fridge" className="bg-purple-900 text-white px-6 py-3 rounded-md hover:bg-purple-700 transition-colors duration-200">
+            <Link to="/plan-from-your-fridge" className="bg-purple-900 text-white px-6 py-3 rounded-md hover:bg-purple-700 transition-colors duration-200">
                 Navigate to PlanFromYourFridge
             </Link>
           </div>
