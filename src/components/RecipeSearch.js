@@ -3,7 +3,7 @@ import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { NextArrow, PrevArrow } from './CustomArrows.js'; // Import the custom arrow components
+import { NextArrow, PrevArrow } from '../CustomArrows.js'; // Import the custom arrow components
 
 const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
@@ -88,7 +88,7 @@ const RecipeSearch = () => {
             <div className="bg-white rounded-full p-4 shadow-lg mb-4">
               <img
                 src="/img/preferences.png"
-                alt="Describe your situation"
+                alt="Enter your preferences"
                 className="w-36 h-36"
               />
             </div>
@@ -121,16 +121,18 @@ const RecipeSearch = () => {
               className="bg-white p-2 w-full mb-2 border border-gray-300 rounded"
             />
           </div>
+          <div class="text-center"> 
           <button
             type="button"
             onClick={() => setShowIntolerances(!showIntolerances)}
             className="p-2 mb-2 border border-gray-300 rounded bg-purple-700 text-white"
           >
-            Allergies?
+            Show Allergies
           </button>
+          </div>
           {showIntolerances && (
-            <div className="mb-4">
-              <h3 className="text-lg text-purple-900 font-semibold mb-2">Select Intolerances:</h3>
+            <div className="mb-4 text-center">
+              <h3 className="text-lg text-purple-900 font-semibold mb-2">Select Allergies:</h3>
               <div className="grid grid-cols-2 gap-2 text-purple-900">
                 {intolerancesList.map((intolerance) => (
                   <label key={intolerance} className="flex items-center space-x-2">
@@ -158,15 +160,16 @@ const RecipeSearch = () => {
         {error && <p className="text-red-500">Error: {error.message}</p>}
         {data && data.results.length === 0 && loading === false && (
           <div>
-            <p>No recipes found. Please try again with different preferences.</p>
+            <p className="text-center text-lg text-purple-900">
+              No recipes found. Please try again with different preferences.</p>
           </div>
         )}
         {data && data.results.length === 1 && (
           <div className="mt-8">
-            <h3 className="text-xl font-bold mb-4 text-purple-900">One Recipe Found:</h3>
+            <h3 className="text-center text-xl font-bold mb-4 text-purple-900">One Recipe Found:</h3>
             <div
               key={data.results[0].id}
-              className="p-4 bg-gray-100 border border-gray-300 rounded-lg shadow"
+              className="text-center p-4 bg-gray-100 border border-gray-300 rounded-lg shadow"
             >
               <h4 className="text-lg text-purple-900 font-semibold text-center">{data.results[0].title}</h4>
               <img
@@ -185,7 +188,7 @@ const RecipeSearch = () => {
         )}
         {data && data.results.length > 1 && (
           <div>
-            <h2 className="text-xl text-purple-900 font-semibold mb-4">Results</h2>
+            <h2 className="text-center text-xl text-purple-900 font-semibold mb-4">Results</h2>
             <Slider {...settings}>
               {data.results.map((recipe) => (
                 <div key={recipe.id} className="text-center text-purple-900">
@@ -194,7 +197,7 @@ const RecipeSearch = () => {
                     alt={recipe.title}
                     className="w-full h-auto max-w-lg mx-auto rounded"
                   />
-                  <h3 className="mt-2">{recipe.title}</h3>
+                  <h3 className="text-center mt-2">{recipe.title}</h3>
                   <button
                     onClick={() => fetchRecipeDetails(recipe.id)}
                     className="mt-2 p-2 bg-purple-700 text-white rounded"

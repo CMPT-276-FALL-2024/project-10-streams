@@ -174,14 +174,14 @@ const MultimodalPrompt = () => {
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-purple-900 font-medium mb-2">Upload your photo</label>
+            <label className="block text-center text-purple-900 font-medium mb-2">Upload your photo</label>
             <input
               type="file"
               accept="image/*"
               onChange={handleFileChange}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none"
             />
-            <label className="block text-purple-900 text-sm mb-2">Accepted formats: .png, .jpg</label>
+            <label className="block text-center text-purple-900 text-sm mb-2">Accepted formats: .png, .jpg</label>
           </div>
           <div>
             <button
@@ -198,13 +198,13 @@ const MultimodalPrompt = () => {
         {/* Recipe Slider */}
         {recipes.length === 0 && done && loading === false && (
             <div className="mt-8">
-              <p className="text-lg text-purple-900">
+              <p className="text-center text-lg text-purple-900">
                 No recipes found. Please try again with a different photo.
               </p>
             </div>)}
         {recipes.length === 1
           && (
-            <div className="mt-8">
+            <div className="text-center mt-8">
               <h3 className="text-xl font-bold mb-4 text-purple-900">One Recipe Found:</h3>
               <div
                 key={recipes[0].id}
@@ -216,11 +216,11 @@ const MultimodalPrompt = () => {
                   alt={recipes[0].title}
                   className="w-full h-auto max-h-64 object-contain rounded-md mt-2"
                 />
-                <p className="mt-2 text-sm text-purple-900">
+                <p className="text-center mt-2 text-sm text-purple-900">
                   <strong>Used Ingredients:</strong>{" "}
                   {recipes[0].usedIngredients.map((ing) => ing.name).join(", ")}
                 </p>
-                <p className="mt-1 text-sm text-purple-900">
+                <p className="text-center mt-1 text-sm text-purple-900">
                   <strong>Missed Ingredients:</strong>{" "}
                   {recipes[0].missedIngredients.map((ing) => ing.name).join(", ")}
                 </p>
@@ -233,7 +233,7 @@ const MultimodalPrompt = () => {
               </div>
             </div>)}
         {recipes.length > 1 && (
-          <div className="mt-8">
+          <div className="text-center mt-8">
             <h3 className="text-xl font-bold mb-4 text-purple-900">Recipes:</h3>
             <Slider {...sliderSettings}>
               {recipes.map((recipe) => (

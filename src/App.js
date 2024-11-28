@@ -4,7 +4,7 @@ import Header from './components/Header';
 import AboutSection from './components/AboutSection';
 import Tutorial from './components/RecipeSection';
 import Footer from './components/Footer';
-import RecipeSearch from './RecipeSearch';
+import RecipeSearch from './components/RecipeSearch';
 import AboutUs from './components/AboutUs';
 import Gemini from './components/Gemini';
 import PlanFromFridge from './components/PlanFromFridge';

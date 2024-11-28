@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
 import axios from "axios";
 import Slider from "react-slick";
-import { NextArrow, PrevArrow } from "../CustomArrows";
+import { NextArrow, PrevArrow } from "../CustomArrows.js";
 
 const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
 const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
@@ -169,7 +169,7 @@ const MultimodalPrompt = () => {
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-purple-900 font-medium mb-2">Describe Your Situation</label>
+            <label className="block text-center text-purple-900 font-medium mb-2">Describe Your Situation</label>
             <input
               type="text"
               value={prompt}
@@ -194,7 +194,7 @@ const MultimodalPrompt = () => {
         {/* General Advice */}
         {generalAdvice && (
           <div className="mt-8">
-            <h3 className="text-xl font-bold mb-4 text-purple-900">General Advice:</h3>
+            <h3 className="text-center text-xl font-bold mb-4 text-purple-900">General Advice:</h3>
             <p className="text-gray-600">{generalAdvice}</p>
           </div>
         )}
@@ -202,19 +202,19 @@ const MultimodalPrompt = () => {
         {/* Recipe Slider */}
         {recipes.length === 0 && done && loading === false && (
             <div className="mt-8">
-              <p className="text-lg text-purple-900">
+              <p className="text-center text-lg text-purple-900">
                 No recipes found. Please try a new prompt.
               </p>
             </div>)}
         {recipes.length === 1
           && (
             <div className="mt-8">
-              <h3 className="text-xl font-bold mb-4 text-purple-900">One Recipe Found:</h3>
+              <h3 className="text-center text-xl font-bold mb-4 text-purple-900">One Recipe Found:</h3>
               <div
                 key={recipes[0].id}
-                className="p-4 bg-gray-100 border border-gray-300 rounded-lg shadow"
+                className="text-center p-4 bg-gray-100 border border-gray-300 rounded-lg shadow"
               >
-                <h4 className="text-lg text-purple-900 font-semibold text-center">{recipes[0].title}</h4>
+                <h4 className="text-center text-lg text-purple-900 font-semibold text-center">{recipes[0].title}</h4>
                 <img
                   src={`https://spoonacular.com/recipeImages/${recipes[0].id}-312x231.${recipes[0].imageType}`}
                   alt={recipes[0].title}
@@ -230,10 +230,10 @@ const MultimodalPrompt = () => {
             </div>)}
         {recipes.length > 1 && (
             <div className="mt-8">
-              <h3 className="text-xl font-bold mb-4 text-purple-900">Recipes:</h3>
+              <h3 className="text-center text-xl font-bold mb-4 text-purple-900">Recipes:</h3>
               <Slider {...sliderSettings}>
                 {recipes.map((recipe) => (
-                  <div key={recipe.id} className="p-4 bg-gray-100 border border-gray-300 rounded-lg shadow">
+                  <div key={recipe.id} className="text-center p-4 bg-gray-100 border border-gray-300 rounded-lg shadow">
                     <h4 className="text-lg text-purple-900 font-semibold text-center">{recipe.title}</h4>
                     <img
                       src={recipe.image}
