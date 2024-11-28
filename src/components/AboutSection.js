@@ -8,7 +8,7 @@ function AboutSection() {
             </h2>
             
             <div className="flex flex-row mt-4">
-                <p className="text-left text-purple-900 border p-5 w-2/3">
+                <p className="text-left text-purple-900 border-slate-200 border-4 rounded-lg p-5 w-2/3">
                     At PlanYourPlate, we are passionate about connecting individuals with recipes that match their needs.
                     We understand the struggle of striving for a healthier lifestyle despite a busy schedule, which is the inspiration behind our feature: 
                     <span className="text-customRed animate-bounce"> PlanYourMeals</span>, <span className="text-orange-600 animate-bounce"> PlanYourRecipes</span>, 
@@ -30,7 +30,7 @@ function AboutSection() {
                     like the name implies, you receive recipes from ingredients in your fridge! Simply upload an image, and let us do the work.
                 </p>
                 
-                <div className="w-1/3 flex justify-center items-center p-5  ml-4 bg-slate-200">
+                <div className="w-1/3 flex justify-center items-center p-5  ml-4 bg-slate-200 rounded-lg">
                     <img src="img/Searching For Recipes.gif" alt="Searching for recipes illustration" />
                 </div>
             </div>

@@ -58,7 +58,7 @@ const MultimodalPrompt = () => {
           role: "user",
           parts: [
             { inline_data: { mime_type: "image/jpeg", data: imageBase64 } },
-            { text: "List only the ingredients in this photo like a shopping list. Don't add a title; just the list" },
+            { text: "List only the ingredients in this photo, separated by commas. Do not add any bullet points, asterisks, titles, or newlines; just list the ingredients." },
           ],
         },
       ];
@@ -69,24 +69,28 @@ const MultimodalPrompt = () => {
         buffer.push(response.text());
       }
 
-      const analyzedIngredients = buffer.join("").toLowerCase().split(", ");
-      setIngredients(analyzedIngredients);
-      console.log(analyzedIngredients)
+      const analyzedIngredients = buffer
+        .join("")
+        .toLowerCase()
+        .replace(/[*\n]/g, "") 
+        .split(", ")           
+        .map(ingredient => ingredient.trim());
 
-      const spoonacularResponse = await axios.get(
-        "https://api.spoonacular.com/recipes/findByIngredients",
-        {
-          params: {
-            ingredients: analyzedIngredients.join(","),
-            number: 50,
-            apiKey: SPOONACULAR_API_KEY,
-            addRecipeInformation: true,
-          },
-        }
-      );
-      const filteredRecipes = spoonacularResponse.data.filter(
-        (recipe) => recipe.missedIngredients.length < 7
-      ).slice(0,5);
+      setIngredients(analyzedIngredients);
+      console.log(analyzedIngredients);
+
+      const sanitizedIngredients = analyzedIngredients.map(ingredient => ingredient.trim());
+      console.log(sanitizedIngredients);
+      const queryString = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(
+      sanitizedIngredients.join(",")
+      )}&number=50&apiKey=${SPOONACULAR_API_KEY}&addRecipeInformation=true`;
+    
+      const spoonacularResponse = await axios.get(queryString);
+    
+      const filteredRecipes = spoonacularResponse.data
+        .filter((recipe) => recipe.missedIngredients.length < 7)
+        .slice(0, 5);
+    
       setRecipes(filteredRecipes);
     } catch (error) {
       console.error("Error:", error);
@@ -123,7 +127,7 @@ const MultimodalPrompt = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-6">
+    <div className="bg-gray-50 py-12 px-6">
       {/* How It Works Section */}
       <div className="bg-purple-50 py-10 px-6 mb-12 rounded-lg shadow-md">
         <h2 className="text-3xl font-bold text-purple-700 text-center mb-8">How It Works</h2>
@@ -170,14 +174,14 @@ const MultimodalPrompt = () => {
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-purple-900 font-medium mb-2">Upload your photo</label>
+            <label className="block text-center text-purple-900 font-medium mb-2">Upload your photo</label>
             <input
               type="file"
               accept="image/*"
               onChange={handleFileChange}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none"
             />
-            <label className="block text-purple-900 text-sm mb-2">Accepted formats: .png, .jpg</label>
+            <label className="block text-center text-purple-900 text-sm mb-2">Accepted formats: .png, .jpg</label>
           </div>
           <div>
             <button
@@ -192,16 +196,15 @@ const MultimodalPrompt = () => {
         </form>
 
         {/* Recipe Slider */}
-        {recipes.length === 0
-          && done && (
+        {recipes.length === 0 && done && loading === false && (
             <div className="mt-8">
-              <p className="text-lg text-purple-900">
+              <p className="text-center text-lg text-purple-900">
                 No recipes found. Please try again with a different photo.
               </p>
             </div>)}
         {recipes.length === 1
           && (
-            <div className="mt-8">
+            <div className="text-center mt-8">
               <h3 className="text-xl font-bold mb-4 text-purple-900">One Recipe Found:</h3>
               <div
                 key={recipes[0].id}
@@ -213,11 +216,11 @@ const MultimodalPrompt = () => {
                   alt={recipes[0].title}
                   className="w-full h-auto max-h-64 object-contain rounded-md mt-2"
                 />
-                <p className="mt-2 text-sm text-purple-900">
+                <p className="text-center mt-2 text-sm text-purple-900">
                   <strong>Used Ingredients:</strong>{" "}
                   {recipes[0].usedIngredients.map((ing) => ing.name).join(", ")}
                 </p>
-                <p className="mt-1 text-sm text-purple-900">
+                <p className="text-center mt-1 text-sm text-purple-900">
                   <strong>Missed Ingredients:</strong>{" "}
                   {recipes[0].missedIngredients.map((ing) => ing.name).join(", ")}
                 </p>
@@ -230,7 +233,7 @@ const MultimodalPrompt = () => {
               </div>
             </div>)}
         {recipes.length > 1 && (
-          <div className="mt-8">
+          <div className="text-center mt-8">
             <h3 className="text-xl font-bold mb-4 text-purple-900">Recipes:</h3>
             <Slider {...sliderSettings}>
               {recipes.map((recipe) => (

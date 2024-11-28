@@ -58,6 +58,8 @@ jobs:
         
       - name: run tests
         env:
+          REACT_APP_SPOONACULAR_API_KEY: ${{ secrets.SPOONACULAR_API_KEY }}
+          REACT_APP_GEMINI_API_KEY: ${{secrets.GEMINI_API_KEY}}
           CI: true
         run: npm test  
 

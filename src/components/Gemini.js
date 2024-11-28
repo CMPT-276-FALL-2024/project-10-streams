@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
 import axios from "axios";
 import Slider from "react-slick";
-import { NextArrow, PrevArrow } from "../CustomArrows";
+import { NextArrow, PrevArrow } from "../CustomArrows.js";
 
 const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
 const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
@@ -133,7 +133,7 @@ const MultimodalPrompt = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-6">
+    <div className=" bg-gray-50 py-12 px-6">
       {/* How It Works Section */}
       <div className="bg-purple-50 py-10 px-6 mb-12 rounded-lg shadow-md">
         <h2 className="text-3xl font-bold text-purple-700 text-center mb-8">How It Works</h2>
@@ -169,7 +169,7 @@ const MultimodalPrompt = () => {
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-purple-900 font-medium mb-2">Describe Your Situation</label>
+            <label className="block text-center text-purple-900 font-medium mb-2">Describe Your Situation</label>
             <input
               type="text"
               value={prompt}
@@ -194,28 +194,27 @@ const MultimodalPrompt = () => {
         {/* General Advice */}
         {generalAdvice && (
           <div className="mt-8">
-            <h3 className="text-xl font-bold mb-4 text-gray-700">General Advice:</h3>
+            <h3 className="text-center text-xl font-bold mb-4 text-purple-900">General Advice:</h3>
             <p className="text-gray-600">{generalAdvice}</p>
           </div>
         )}
 
         {/* Recipe Slider */}
-        {recipes.length === 0
-          && done && (
+        {recipes.length === 0 && done && loading === false && (
             <div className="mt-8">
-              <p className="text-lg text-purple-900">
+              <p className="text-center text-lg text-purple-900">
                 No recipes found. Please try a new prompt.
               </p>
             </div>)}
         {recipes.length === 1
           && (
             <div className="mt-8">
-              <h3 className="text-xl font-bold mb-4 text-purple-900">One Recipe Found:</h3>
+              <h3 className="text-center text-xl font-bold mb-4 text-purple-900">One Recipe Found:</h3>
               <div
                 key={recipes[0].id}
-                className="p-4 bg-gray-100 border border-gray-300 rounded-lg shadow"
+                className="text-center p-4 bg-gray-100 border border-gray-300 rounded-lg shadow"
               >
-                <h4 className="text-lg text-purple-900 font-semibold text-center">{recipes[0].title}</h4>
+                <h4 className="text-center text-lg text-purple-900 font-semibold text-center">{recipes[0].title}</h4>
                 <img
                   src={`https://spoonacular.com/recipeImages/${recipes[0].id}-312x231.${recipes[0].imageType}`}
                   alt={recipes[0].title}
@@ -231,11 +230,11 @@ const MultimodalPrompt = () => {
             </div>)}
         {recipes.length > 1 && (
             <div className="mt-8">
-              <h3 className="text-xl font-bold mb-4 text-gray-700">Recipes:</h3>
+              <h3 className="text-center text-xl font-bold mb-4 text-purple-900">Recipes:</h3>
               <Slider {...sliderSettings}>
                 {recipes.map((recipe) => (
-                  <div key={recipe.id} className="p-4 bg-gray-100 border border-gray-300 rounded-lg shadow">
-                    <h4 className="text-lg font-semibold text-center">{recipe.title}</h4>
+                  <div key={recipe.id} className="text-center p-4 bg-gray-100 border border-gray-300 rounded-lg shadow">
+                    <h4 className="text-lg text-purple-900 font-semibold text-center">{recipe.title}</h4>
                     <img
                       src={recipe.image}
                       alt={recipe.title}
@@ -253,31 +252,6 @@ const MultimodalPrompt = () => {
             </div>
           )}
 
-
-        {/* Selected Recipe Details */}
-        {selectedRecipe && (
-           <div className="mt-5 p-5 border border-gray-300 rounded">
-           <h2 className="text-xl font-bold mb-4">{selectedRecipe.title}</h2>
-           <p><strong>Servings:</strong> {selectedRecipe.servings}</p>
-           <p><strong>Ready in:</strong> {selectedRecipe.readyInMinutes} minutes</p>
-           <h3 className="text-lg font-semibold mt-4">Ingredients:</h3>
-           <ul className="list-disc list-inside">
-             {selectedRecipe.extendedIngredients.map((ingredient) => (
-               <li key={ingredient.id}>{ingredient.original}</li>
-             ))}
-           </ul>
-           <h3 className="text-lg font-semibold mt-4">Instructions:</h3>
-           <ol className="list-decimal list-inside">
-             {selectedRecipe.analyzedInstructions.length > 0 ? (
-               selectedRecipe.analyzedInstructions[0].steps.map((step) => (
-                 <li key={step.number}>{step.step}</li>
-               ))
-             ) : (
-               <li>{selectedRecipe.instructions}</li>
-             )}
-           </ol>
-         </div>
-        )}
 
         {/* Selected Recipe Details */}
         {selectedRecipe && (
