@@ -5,12 +5,23 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { NextArrow, PrevArrow } from './CustomArrows.js'; // Import the custom arrow components
 
+/* This file contains the RecipeSearch component that allows users to search for recipes based on their preferences.
+The features implemented on this page include searching using plain text, selecting intolerances, and viewing recipe details.
+All of the features on this page are implemented using the Spoonacular API.
+All the features of the RecipeSearch component are implemented on the PlanYourRecipes page.
+*/
+
+
 const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
+// List of intolerances to choose from
 const intolerancesList = [
   'Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut', 'Wheat'
 ];
 
+// RecipeSearch component that allows users to search for recipes based on their preferences.
+// Contains necessary state variables and functions to handle the search functionality.
+// Error handling is also implemented to display any errors that occur during the API calls.
 const RecipeSearch = () => {
   const [query, setQuery] = useState('');
   const [intolerances, setIntolerances] = useState([]);
@@ -20,6 +31,7 @@ const RecipeSearch = () => {
   const [showIntolerances, setShowIntolerances] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  // Function to handle the search functionality. It makes an API call to the Spoonacular API to fetch recipes based on the user's preferences.
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true)
@@ -43,6 +55,7 @@ const RecipeSearch = () => {
     }
   };
 
+  // Function to handle the change in intolerances selected by the user.
   const handleIntoleranceChange = (e) => {
     const { value, checked } = e.target;
     setIntolerances((prev) =>
@@ -50,6 +63,7 @@ const RecipeSearch = () => {
     );
   };
 
+  // Function to fetch the details of a specific recipe using the recipe ID.
   const fetchRecipeDetails = async (id) => {
     try {
       const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`, {
@@ -66,6 +80,7 @@ const RecipeSearch = () => {
     }
   };
 
+  // Settings for the Slider component to display the recipes in a carousel.
   const settings = {
     dots: false,
     infinite: true,
@@ -75,10 +90,11 @@ const RecipeSearch = () => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     beforeChange: () => {
-      setSelectedRecipe(null);
-    }, // Reset selectedRecipe on slide change
+    setSelectedRecipe(null); // Reset selectedRecipe on slide change
+    }, 
   };
 
+  // Return the necessary JSX for the RecipeSearch component.
   return (
     <div className="py-12 px-6 max-w-3xl mx-auto bg-gray-50">
       <div className="bg-purple-50 py-10 px-6 mb-12 rounded-lg shadow-md">
@@ -234,4 +250,5 @@ const RecipeSearch = () => {
   );
 };
 
+// Export the RecipeSearch component
 export default RecipeSearch;
