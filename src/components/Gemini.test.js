@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import MultimodalPrompt from './Gemini'; // Adjust this path if needed
+import MultimodalPrompt from './Gemini';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
@@ -20,11 +20,10 @@ describe('MultimodalPrompt Component', () => {
     expect(screen.getByText(/Get recipes/i)).toBeInTheDocument();
   });
 const mock = new MockAdapter(axios);
-  // Test 2: Simulate user typing and submit
   
   jest.mock('axios');
   
-  test('Fetches recipes from Spoonacular API', async () => {
+  test('Fetches recipes from Spoonacular API using Gemini filters', async () => {
     // Mock data returned by the API
     const mockData = {
       data: {
@@ -33,19 +32,15 @@ const mock = new MockAdapter(axios);
         ]
       }
     };
-  
-    // Mocking the GET request to return the mock data
     axios.get.mockResolvedValue(mockData);
   
-    // Make the API call in the component
-    const response = await axios.get('https://api.spoonacular.com/recipes/complexSearch');
+    const response = await axios.get('https://api.spoonacular.com/recipes/complexSearch'); //spoonacular call
     
     // Check that the response is not undefined
     expect(response).toBeDefined();
     expect(response.data).toBeDefined();
   
     const { results } = response.data;
-  
     // Assertions for the response
     expect(results).toHaveLength(1);
     expect(results[0]).toMatchObject({
@@ -54,31 +49,4 @@ const mock = new MockAdapter(axios);
       image: "https://example.com/image.jpg"
     });
   });
-  
-
-  // Test 3: Error Handling when API fails to call
-//   test('shows an error message when no recipes are found', async () => {
-//     // Mock the API call with no results
-//     axios.get.mockResolvedValueOnce({
-//       data: { results: [] }, // Empty results array
-//     });
-  
-//     render(<MultimodalPrompt />);
-  
-//     const input = screen.getByPlaceholderText(/E.g., I have a cold and need something soothing/i);
-//     const button = screen.getByText(/Get Recipes/i);
-  
-//     userEvent.type(input, 'I need a quick lunch idea'); // Use `userEvent` for typing
-//     fireEvent.click(button);
-  
-//     // Debug the DOM to inspect the rendered output (optional)
-//     screen.debug();
-
-//     if (data.results.length === 0){
-//         setErrorMessage('No recipes found');
-//     }
-//     const errorMessage = screen.queryByText(/No recipes found/i);
-//     console.log('Error Message:', errorMessage); // Should print the DOM node or `null`.
-//     expect(errorMessage).toBeInTheDocument();    
-//   });
 });

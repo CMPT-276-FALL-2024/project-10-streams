@@ -11,8 +11,10 @@ describe('Basic Jest Test', () => {
   import axios from 'axios';
   import { MemoryRouter } from 'react-router-dom';
   
+  const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
   
   jest.mock('axios'); //******mock API call 
+  jest.setTimeout(10000);
   /**
   npm uninstall axios
   npm install axios@0.27.2 //import axios only works here
@@ -133,4 +135,26 @@ describe('Basic Jest Test', () => {
       fireEvent.click(dairyCheckbox);
       expect(screen.getByLabelText(/Dairy/i).checked).toBe(true);
     })
+  });
+
+
+  describe('API call test: ', () => {
+    it('Send REAL request and return? DO NOT SPAM!', async () => {
+      render(
+        <MemoryRouter>
+          <RecipeSearch />
+        </MemoryRouter>
+      );
+    
+      const searchInput = screen.getByPlaceholderText('Eg., Recipes from Japan');
+      const searchButton = screen.getByText('Search');
+    
+      fireEvent.change(searchInput, { target: { value: 'Japanese' } });
+      fireEvent.click(searchButton);
+    
+      // Wait for any element related to the recipe results to be in the document
+      const searchResults = await screen.findAllByText(/recipe/i, { timeout: 5000 });    
+      expect(searchResults.length).toBeGreaterThan(0);
+    });
+    
   });
