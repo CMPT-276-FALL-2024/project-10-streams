@@ -6,7 +6,7 @@ describe('Basic Jest Test', () => {
   //*************************************************ensure jest library test */
   import React from 'react';
   import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-  import RecipeSearch from './RecipeSearch';
+  import RecipeSearch from './components/RecipeSearch';
   import '@testing-library/jest-dom';
   import axios from 'axios';
   import { MemoryRouter } from 'react-router-dom';
