@@ -40,9 +40,10 @@ const RecipeSearch = () => {
       const response = await axios.get('https://api.spoonacular.com/recipes/complexSearch', {
         params: {
           query: query,
-          intolerances: intolerances.join(','),
+          intolerances: intolerances.join(','), 
           apiKey: SPOONACULAR_API_KEY,
-          addRecipeInformation: true,
+          addRecipeInformation: true, 
+          number: 100, // Number of recipes
         },
       });
       setData(response.data);
@@ -94,7 +95,7 @@ const RecipeSearch = () => {
     }, 
   };
 
-  // Return the necessary JSX for the RecipeSearch component.
+  // Return the JSX for the RecipeSearch component
   return (
     <div className="py-12 px-6 max-w-3xl mx-auto bg-gray-50">
       <div className="bg-purple-50 py-10 px-6 mb-12 rounded-lg shadow-md">
