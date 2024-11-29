@@ -16,6 +16,7 @@ describe('Basic Jest Test', () => {
   jest.mock('axios'); //******mock API call 
   jest.setTimeout(10000);
   /**
+   * npm install i
   npm uninstall axios
   npm install axios@0.27.2 //import axios only works here
   npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
@@ -139,7 +140,7 @@ describe('Basic Jest Test', () => {
 
 
   describe('API call test: ', () => {
-    it('Send REAL request and return? DO NOT SPAM!', async () => {
+    it('Fill-text query correct?', async () => {
       render(
         <MemoryRouter>
           <RecipeSearch />
@@ -156,5 +157,27 @@ describe('Basic Jest Test', () => {
       const searchResults = await screen.findAllByText(/recipe/i, { timeout: 5000 });    
       expect(searchResults.length).toBeGreaterThan(0);
     });
+  
+    jest.mock('axios');
+//CI/CD pipeline mock environment
+    test('Mock test for Spoonacular API', async () => {
+      const mockData = {
+        data: {
+          results: [
+            { id: 716429, title: "Pasta with Garlic", image: "https://example.com/image.jpg" }
+          ]
+        }
+      };
+      axios.get.mockResolvedValue(mockData);
     
+      const response = await axios.get('https://api.spoonacular.com/recipes/complexSearch');
+      const { results } = response.data;
+    
+      expect(results).toHaveLength(1);
+      expect(results[0]).toMatchObject({
+        id: 716429,
+        title: "Pasta with Garlic",
+        image: "https://example.com/image.jpg"
+      });
+    }); 
   });
