@@ -12,11 +12,9 @@ require('dotenv').config();
 /**
  * npm install axios-mock-adapter --save-dev
  * npm install dotenv
+ * 
+ * uses spoonacular after, RecipeSearch.test.js applied
  */
-const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
-const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
-
-
 
 describe('PlanFromFridge Component Tests', ()=> {
     let mock;
@@ -48,9 +46,4 @@ it("No File Uploaded Alert?", async () => {
       expect(window.alert).toHaveBeenCalledWith("Please upload an image."); //asks user for image
     });
 });
-  it('Key Allocation from .env?', () => {
-    expect(GEMINI_API_KEY).toBeDefined();
-    expect(SPOONACULAR_API_KEY).toBeDefined();
-  });
-  
 });
