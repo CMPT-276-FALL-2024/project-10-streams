@@ -24,7 +24,7 @@ const mock = new MockAdapter(axios);
   jest.mock('axios');
   
   test('Fetches recipes from Spoonacular API using Gemini filters', async () => {
-    // Mock data returned by the API
+    // Mock data sent to API
     const mockData = {
       data: {
         results: [
@@ -34,16 +34,16 @@ const mock = new MockAdapter(axios);
     };
     axios.get.mockResolvedValue(mockData);
   
-    const response = await axios.get('https://api.spoonacular.com/recipes/complexSearch'); //spoonacular call
+    const response = await axios.get('https://api.spoonacular.com/recipes/complexSearch'); //spoonacular call no http
     
     // Check that the response is not undefined
-    expect(response).toBeDefined();
-    expect(response.data).toBeDefined();
+    expect(response).toBeDefined();      
+    expect(response.data).toBeDefined(); 
   
     const { results } = response.data;
     // Assertions for the response
     expect(results).toHaveLength(1);
-    expect(results[0]).toMatchObject({
+    expect(results[0]).toMatchObject({ //ensure response alignment
       id: 716429,
       title: "Pasta with Garlic",
       image: "https://example.com/image.jpg"
