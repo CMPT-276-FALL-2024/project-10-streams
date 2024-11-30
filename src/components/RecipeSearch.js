@@ -121,7 +121,7 @@ const RecipeSearch = () => {
               className="bg-white p-2 w-full mb-2 border border-gray-300 rounded"
             />
           </div>
-          <div class="text-center"> 
+          <div className="text-center"> 
           <button
             type="button"
             onClick={() => setShowIntolerances(!showIntolerances)}

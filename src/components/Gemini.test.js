@@ -1,13 +1,6 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import MultimodalPrompt from './Gemini';
 import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-
-/**
- * npm install axios-mock-adapter --save-dev
- */
-
 
 jest.mock('axios'); 
 
@@ -19,7 +12,6 @@ describe('MultimodalPrompt Component', () => {
     expect(screen.getAllByText(/Describe your situation/i)[0]).toBeInTheDocument(); // Ensures it rendered something
     expect(screen.getByText(/Get recipes/i)).toBeInTheDocument();
   });
-const mock = new MockAdapter(axios);
   
   jest.mock('axios');
   
