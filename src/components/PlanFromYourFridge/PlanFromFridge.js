@@ -4,26 +4,30 @@ import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { NextArrow, PrevArrow } from "../CustomArrows";
+import { NextArrow, PrevArrow } from "../Utilities/CustomArrows";
 
 const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
 const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
 const MultimodalPrompt = () => {
-  const [file, setFile] = useState(null);
-  const [, setIngredients] = useState([]);
-  const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [selectedRecipe, setSelectedRecipe] = useState(null);
-  const [done, setDone] = useState(false);
+  const [file, setFile] = useState(null); // Uploaded image file
+  const [, setIngredients] = useState([]); // Extracted ingredients from the image
+  const [recipes, setRecipes] = useState([]); // Recipes based on the ingredients
+  const [loading, setLoading] = useState(false); // Loading state
+  const [selectedRecipe, setSelectedRecipe] = useState(null); // Selected recipe details
+  const [done, setDone] = useState(false); // Flag to indicate if the analysis is done
 
-  const handleFileChange = (e) => {
+  const handleFileChange = (e) => { // Handle file change
     setFile(e.target.files[0]);
     setDone(false);
     setSelectedRecipe(null);
   };
 
-
+  /*
+  * Function to handle form submission
+  * This function uses the Google Generative AI to analyze the image and extract the ingredients.
+  * It then uses the Spoonacular API to fetch recipes based on the extracted ingredients.
+  */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!file) {
@@ -34,7 +38,7 @@ const MultimodalPrompt = () => {
     setLoading(true);
     setSelectedRecipe(null);
 
-    try {
+    try { // Try to analyze the image and fetch recipes
       const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
       const model = genAI.getGenerativeModel({
         model: "gemini-1.5-flash",
@@ -46,7 +50,7 @@ const MultimodalPrompt = () => {
         ],
       });
 
-      const imageBase64 = await new Promise((resolve, reject) => {
+      const imageBase64 = await new Promise((resolve, reject) => { // Convert image to base64
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result.split(",")[1]);
@@ -68,7 +72,7 @@ const MultimodalPrompt = () => {
       for await (let response of result.stream) {
         buffer.push(response.text());
       }
-
+      // Extract ingredients from the response
       const analyzedIngredients = buffer
         .join("")
         .toLowerCase()
@@ -78,15 +82,19 @@ const MultimodalPrompt = () => {
 
       setIngredients(analyzedIngredients);
       console.log(analyzedIngredients);
-
+      
+      // Fetch recipes based on the extracted ingredients
       const sanitizedIngredients = analyzedIngredients.map(ingredient => ingredient.trim());
       console.log(sanitizedIngredients);
+
+      // Fetch recipes based on the extracted ingredients
       const queryString = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(
       sanitizedIngredients.join(",")
       )}&number=50&apiKey=${SPOONACULAR_API_KEY}&addRecipeInformation=true`;
     
       const spoonacularResponse = await axios.get(queryString);
-    
+      
+      // Filter recipes based on the number of missed ingredients
       const filteredRecipes = spoonacularResponse.data
         .filter((recipe) => recipe.missedIngredients.length < 7)
         .slice(0, 5);
@@ -99,7 +107,7 @@ const MultimodalPrompt = () => {
       setDone(true);
     }
   };
-
+  // Function to fetch recipe details
   const fetchRecipeDetails = async (id) => {
     setSelectedRecipe(null); // Reset selected recipe
     try {
@@ -115,6 +123,7 @@ const MultimodalPrompt = () => {
     }
   };
 
+  // Slider settings
   const sliderSettings = {
     dots: false,
     infinite: true,

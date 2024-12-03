@@ -1,5 +1,7 @@
 import React from 'react';
 
+// Custom arrow components
+// NextArrow component
 const NextArrow = (props) => {
   const { className, style, onClick } = props;
   return (
@@ -23,7 +25,7 @@ const NextArrow = (props) => {
     </div>
   );
 };
-
+// PrevArrow component
 const PrevArrow = (props) => {
   const { className, style, onClick } = props;
   return (

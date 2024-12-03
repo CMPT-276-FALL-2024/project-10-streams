@@ -1,16 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import Header from './components/Header';
-import AboutSection from './components/AboutSection';
-import Tutorial from './components/RecipeSection';
-import Footer from './components/Footer';
-import RecipeSearch from './components/RecipeSearch';
-import AboutUs from './components/AboutUs';
-import Gemini from './components/Gemini';
-import PlanFromFridge from './components/PlanFromFridge';
-import Navigate from './components/Navigate';
+import Header from './components/Utilities/Header';
+import AboutSection from './components/Homepage/AboutSection';
+import Tutorial from './components/Homepage/RecipeSection';
+import Footer from './components/Utilities/Footer';
+import RecipeSearch from './components/PlanYourRecipes/RecipeSearch';
+import AboutUs from './components/About Us/AboutUs';
+import Gemini from './components/PlanYourMeals/Gemini';
+import PlanFromFridge from './components/PlanFromYourFridge/PlanFromFridge';
+import Navigate from './components/Utilities/Navigate';
 import './App.css';
 
+// App component
 function App() {
   return (
     <Router>
@@ -18,7 +19,6 @@ function App() {
     </Router>
   );
 }
-
 function MainContent() {
   const location = useLocation();
   const isRecipeSearchPage = location.pathname === '/recipe-search';
@@ -37,7 +37,7 @@ function MainContent() {
               <Tutorial />
             </>
           } />
-          <Route path="/plan-your-meals" element={<Gemini />} />
+          <Route path="/plan-your-meals" element={<Gemini />} /> 
           <Route path="/plan-your-recipes" element={<RecipeSearch />} />
           <Route path="/plan-from-your-fridge" element={<PlanFromFridge />} />
           <Route path="/about" element={<AboutUs />} />

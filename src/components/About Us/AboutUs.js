@@ -1,7 +1,8 @@
 import React from 'react';
 
 function AboutUs() {
-    return (
+    // About Us Section
+    return (       
         <section className="aboutUs-section p-4 sm:p-6 md:p-8 lg:p-10 mx-auto max-w-screen-xl">
             <h2 className="text-purple-900 text-left text-2xl sm:text-3xl lg:text-4xl font-bold">
                 Behind <em>PlanYourPlate</em>

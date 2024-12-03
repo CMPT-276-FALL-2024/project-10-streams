@@ -3,14 +3,16 @@ import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { NextArrow, PrevArrow } from '../CustomArrows.js'; // Import the custom arrow components
+import { NextArrow, PrevArrow } from '../Utilities/CustomArrows.js'; // Import the custom arrow components
 
 const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
+// List of intolerances
 const intolerancesList = [
   'Dairy', 'Egg', 'Gluten', 'Grain', 'Peanut', 'Seafood', 'Sesame', 'Shellfish', 'Soy', 'Sulfite', 'Tree Nut', 'Wheat'
 ];
 
+// RecipeSearch component
 const RecipeSearch = () => {
   const [query, setQuery] = useState('');
   const [intolerances, setIntolerances] = useState([]);
@@ -19,7 +21,7 @@ const RecipeSearch = () => {
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [showIntolerances, setShowIntolerances] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  // Handle search function
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true)
@@ -42,14 +44,14 @@ const RecipeSearch = () => {
       setLoading(false)
     }
   };
-
+  // Handle intolerance change
   const handleIntoleranceChange = (e) => {
     const { value, checked } = e.target;
     setIntolerances((prev) =>
       checked ? [...prev, value] : prev.filter((intolerance) => intolerance !== value)
     );
   };
-
+  // Fetch recipe details
   const fetchRecipeDetails = async (id) => {
     try {
       const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information`, {
@@ -65,7 +67,7 @@ const RecipeSearch = () => {
       setSelectedRecipe(null);
     }
   };
-
+  // Settings for the slider
   const settings = {
     dots: false,
     infinite: true,
@@ -80,6 +82,7 @@ const RecipeSearch = () => {
   };
 
   return (
+    // Main recipe page section
     <div className="py-12 px-6 max-w-3xl mx-auto bg-gray-50">
       <div className="bg-purple-50 py-10 px-6 mb-12 rounded-lg shadow-md">
         <h2 className="text-3xl font-bold text-purple-700 text-center mb-8">How It Works</h2>
@@ -107,6 +110,7 @@ const RecipeSearch = () => {
           </div>
         </div>
       </div>
+      {/* Recipe search form */}
       <div className="bg-white shadow-lg rounded-lg w-full max-w-2xl mx-auto p-8">
         <h2 className="text-3xl font-bold text-purple-700 text-center mb-6">
           Search for Recipes Based on Your Preferences
@@ -121,7 +125,7 @@ const RecipeSearch = () => {
               className="bg-white p-2 w-full mb-2 border border-gray-300 rounded"
             />
           </div>
-          <div class="text-center"> 
+          <div className="text-center"> 
           <button
             type="button"
             onClick={() => setShowIntolerances(!showIntolerances)}
@@ -187,8 +191,9 @@ const RecipeSearch = () => {
           </div>
         )}
         {data && data.results.length > 1 && (
-          <div>
-            <h2 className="text-center text-xl text-purple-900 font-semibold mb-4">Results</h2>
+        <div>
+        {/* Display recipe results in a slider */}
+        <h2 className="text-center text-xl text-purple-900 font-semibold mb-4">Results</h2>
             <Slider {...settings}>
               {data.results.map((recipe) => (
                 <div key={recipe.id} className="text-center text-purple-900">
@@ -209,6 +214,7 @@ const RecipeSearch = () => {
             </Slider>
           </div>
         )}
+        {/* Display selected recipe details */}
         {selectedRecipe && (
           <div className="mt-5 p-5 border border-gray-300 rounded">
             <h2 className="text-xl font-bold mb-4">{selectedRecipe.title}</h2>

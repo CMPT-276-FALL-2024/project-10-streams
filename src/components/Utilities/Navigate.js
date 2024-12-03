@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+// Navigate component
 const Navigate = () => {
   const [isVisible, setIsVisible] = useState(false);
 
+  // Handle scroll event
   useEffect(() => {
     const handleScroll = () => {
       const header = document.querySelector('header');
@@ -23,6 +24,7 @@ const Navigate = () => {
   }, []);
 
   return (
+    // Navigation menu
     <div
       className={`fixed top-1/2 right-4 transform -translate-y-1/2 bg-purple-900 text-white px-4 py-2 rounded-lg shadow-lg transition-opacity duration-300 
         ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
