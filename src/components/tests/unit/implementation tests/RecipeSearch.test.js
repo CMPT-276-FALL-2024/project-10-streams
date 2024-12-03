@@ -1,16 +1,17 @@
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import RecipeSearch from '../../../PlanYourRecipes/RecipeSearch';
+import '@testing-library/jest-dom';
+import axios from 'axios';
+import { MemoryRouter } from 'react-router-dom';
+
 describe('Basic Jest Test', () => {
     it('Confirm True is True?', () => {
       expect(true).toBe(true);
     });
   });
   //*************************************************ensure jest library test */
-  import React from 'react';
-  import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-  import RecipeSearch from '../../../PlanYourRecipes/RecipeSearch';
-  import '@testing-library/jest-dom';
-  import axios from 'axios';
-  import { MemoryRouter } from 'react-router-dom';
-  
+
   const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
   
   jest.mock('axios'); //******mock API call 
@@ -54,7 +55,7 @@ describe('Basic Jest Test', () => {
         fireEvent.change(searchInput, { target: { value: 'Japanese' } });
         fireEvent.click(searchButton);
         
-        await waitFor(() => screen.getByText('Test Recipe'));       
+        await screen.findByText('Test Recipe');       
         expect(screen.getByText('Test Recipe')).toBeInTheDocument();
         expect(screen.getByAltText('Test Recipe')).toHaveAttribute('src', 'https://spoonacular.com/recipeImages/1-312x231.jpg');
       });
@@ -70,7 +71,7 @@ describe('Basic Jest Test', () => {
     
         fireEvent.change(searchInput, { target: { value: 'Japanese' } });
         fireEvent.click(searchButton);
-        await waitFor(() => screen.getByText('Error: Network error'));
+        await screen.findByText('Error: Network error');
         
         expect(screen.getByText('Error: Network error')).toBeInTheDocument();
       });
@@ -90,14 +91,14 @@ describe('Basic Jest Test', () => {
           };
         axios.get.mockResolvedValue(mockResponse);
         render(<RecipeSearch/>);
-        await waitFor(()=> screen.getByPlaceholderText('Eg., Recipes from Japan'));
+        await screen.findByPlaceholderText('Eg., Recipes from Japan');
 
         const searchInput = screen.getByPlaceholderText('Eg., Recipes from Japan'); 
         const searchButton = screen.getByText('Search');
         fireEvent.change(searchInput, { target: { value: 'Japanese' } });
         fireEvent.click(searchButton);
 
-        await waitFor(()=> screen.getByText('Test Recipe')); //wait for image render
+        await screen.findByText('Test Recipe'); //wait for image render
         const recipeImage = screen.getByAltText('Test Recipe');//alt case
         expect(recipeImage).toBeInTheDocument(); //check in doc
         expect(recipeImage).toHaveAttribute('src', 'https://spoonacular.com/recipeImages/1-312x231.jpg');
@@ -139,7 +140,7 @@ describe('Basic Jest Test', () => {
   });
 
 
-  describe('API call test: ', () => {
+  describe('API call test:', () => {
     it('Fill-text query correct?', async () => {
       render(
         <MemoryRouter>
