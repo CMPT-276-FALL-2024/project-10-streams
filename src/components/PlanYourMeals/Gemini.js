@@ -8,13 +8,14 @@ const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
 const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
 const MultimodalPrompt = () => {
-  const [prompt, setPrompt] = useState("");
-  const [recipes, setRecipes] = useState([]);
+  const [prompt, setPrompt] = useState(""); // User's situation or prompt
+  const [recipes, setRecipes] = useState([]); // List of recipe suggestions
   const [generalAdvice, setGeneralAdvice] = useState(""); // General advice or suggestions
-  const [loading, setLoading] = useState(false);
-  const [selectedRecipe, setSelectedRecipe] = useState(null);
-  const [done, setDone] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state
+  const [selectedRecipe, setSelectedRecipe] = useState(null); // Selected recipe details
+  const [done, setDone] = useState(false); // Done state
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!prompt.trim()) {
@@ -23,7 +24,7 @@ const MultimodalPrompt = () => {
     }
     setLoading(true);
     setDone(true);
-
+    // Fetch recipes and general advice
     try {
       // Step 1: Ask Gemini for recipes and general advice
       const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
@@ -36,20 +37,20 @@ const MultimodalPrompt = () => {
           },
         ],
       });
-
+      // Define the content stream
       const contents = [
         {
           role: "user",
           parts: [
             {
               text: `Please return recipe suggestions in two parts:
-1. A comma-separated list of recipe names for this situation: "${prompt}".
-2. General advice or additional context for these recipes. Do not reference specific recipes.`,
+                    1. A comma-separated list of recipe names for this situation: "${prompt}".
+                    2. General advice or additional context for these recipes. Do not reference specific recipes.`,
             },
           ],
         },
       ];
-
+      // Generate the content stream
       const result = await model.generateContentStream({ contents });
       let buffer = [];
       for await (let response of result.stream) {
@@ -97,14 +98,14 @@ const MultimodalPrompt = () => {
 
       // Filter out invalid or null responses
       setRecipes(spoonacularResults.filter(Boolean));
-    } catch (error) {
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
-      setDone(true);
-    }
+        } catch (error) {
+          console.error("Error:", error);
+        } finally {
+          setLoading(false);
+          setDone(true);
+      }
   };
-
+  // Fetch detailed recipe data from Spoonacular
   const fetchRecipeDetails = async (id) => {
     setSelectedRecipe(null); // Reset selected recipe
     try {
@@ -120,7 +121,7 @@ const MultimodalPrompt = () => {
     }
   };
 
-
+  // Slider settings
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -255,27 +256,27 @@ const MultimodalPrompt = () => {
 
         {/* Selected Recipe Details */}
         {selectedRecipe && (
-           <div className="mt-5 p-5 border border-gray-300 rounded">
-           <h2 className="text-xl font-bold mb-4">{selectedRecipe.title}</h2>
-           <p><strong>Servings:</strong> {selectedRecipe.servings}</p>
-           <p><strong>Ready in:</strong> {selectedRecipe.readyInMinutes} minutes</p>
-           <h3 className="text-lg font-semibold mt-4">Ingredients:</h3>
-           <ul className="list-disc list-inside">
-             {selectedRecipe.extendedIngredients.map((ingredient) => (
-               <li key={ingredient.id}>{ingredient.original}</li>
-             ))}
-           </ul>
-           <h3 className="text-lg font-semibold mt-4">Instructions:</h3>
-           <ol className="list-decimal list-inside">
-             {selectedRecipe.analyzedInstructions.length > 0 ? (
-               selectedRecipe.analyzedInstructions[0].steps.map((step) => (
-                 <li key={step.number}>{step.step}</li>
-               ))
-             ) : (
-               <li>{selectedRecipe.instructions}</li>
-             )}
-           </ol>
-         </div>
+          <div className="mt-5 p-5 border border-gray-300 rounded">
+          <h2 className="text-xl font-bold mb-4">{selectedRecipe.title}</h2>
+          <p><strong>Servings:</strong> {selectedRecipe.servings}</p>
+          <p><strong>Ready in:</strong> {selectedRecipe.readyInMinutes} minutes</p>
+          <h3 className="text-lg font-semibold mt-4">Ingredients:</h3>
+          <ul className="list-disc list-inside">
+            {selectedRecipe.extendedIngredients.map((ingredient) => (
+              <li key={ingredient.id}>{ingredient.original}</li>
+            ))}
+          </ul>
+          <h3 className="text-lg font-semibold mt-4">Instructions:</h3>
+          <ol className="list-decimal list-inside">
+            {selectedRecipe.analyzedInstructions.length > 0 ? (
+              selectedRecipe.analyzedInstructions[0].steps.map((step) => (
+                <li key={step.number}>{step.step}</li>
+              ))
+            ) : (
+              <li>{selectedRecipe.instructions}</li>
+            )}
+          </ol>
+        </div>
         )}
       </div>
     </div>

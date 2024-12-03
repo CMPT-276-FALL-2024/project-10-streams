@@ -1,3 +1,9 @@
+/*
+  This file is a utility for displaying a banner to the user if they have not
+  yet entered their Gemini API key. The banner will prompt the user to get an
+  API key and enter it at the top of main.js. The banner will be displayed at
+  the top of the page.
+*/
 export function maybeShowApiKeyBanner(key, action = `enter it at the top of
 <code>main.js</code>`) {
   if (key === 'TODO') {

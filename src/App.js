@@ -11,6 +11,7 @@ import PlanFromFridge from './components/PlanFromYourFridge/PlanFromFridge';
 import Navigate from './components/Utilities/Navigate';
 import './App.css';
 
+// App component
 function App() {
   return (
     <Router>
@@ -18,7 +19,7 @@ function App() {
     </Router>
   );
 }
-
+{/* MainContent component */}
 function MainContent() {
   const location = useLocation();
   const isRecipeSearchPage = location.pathname === '/recipe-search';
