@@ -3,11 +3,11 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import MultimodalPrompt from "./PlanFromFridge";
-import fs from "fs";
-import path from "path";
+import MultimodalPrompt from "../../../PlanFromYourFridge/PlanFromFridge";
+//import fs from "fs";
+//import path from "path";
 
-import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
+//import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
 require('dotenv').config();
 /**
  * npm install axios-mock-adapter --save-dev

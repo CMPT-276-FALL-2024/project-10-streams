@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from "@google/generative-ai";
 import axios from "axios";
 import Slider from "react-slick";
-import { NextArrow, PrevArrow } from "../CustomArrows.js";
+import { NextArrow, PrevArrow } from "../Utilities/CustomArrows.js";
 
 const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
 const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;

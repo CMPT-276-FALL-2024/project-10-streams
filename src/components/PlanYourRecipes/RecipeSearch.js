@@ -3,7 +3,7 @@ import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { NextArrow, PrevArrow } from '../CustomArrows.js'; // Import the custom arrow components
+import { NextArrow, PrevArrow } from '../Utilities/CustomArrows.js'; // Import the custom arrow components
 
 const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
 
@@ -121,7 +121,7 @@ const RecipeSearch = () => {
               className="bg-white p-2 w-full mb-2 border border-gray-300 rounded"
             />
           </div>
-          <div class="text-center"> 
+          <div className="text-center"> 
           <button
             type="button"
             onClick={() => setShowIntolerances(!showIntolerances)}

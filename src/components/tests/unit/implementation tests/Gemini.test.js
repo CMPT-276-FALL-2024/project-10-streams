@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import MultimodalPrompt from './Gemini';
+import MultimodalPrompt from '../../../PlanYourMeals/Gemini';
 import axios from 'axios';
 //import MockAdapter from 'axios-mock-adapter';
 

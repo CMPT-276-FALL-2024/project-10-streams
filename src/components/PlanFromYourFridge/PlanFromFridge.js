@@ -4,7 +4,7 @@ import axios from "axios";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { NextArrow, PrevArrow } from "../CustomArrows";
+import { NextArrow, PrevArrow } from "../Utilities/CustomArrows";
 
 const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
 const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
