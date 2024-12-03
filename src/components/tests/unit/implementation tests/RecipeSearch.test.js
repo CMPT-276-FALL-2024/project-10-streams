@@ -11,21 +11,10 @@ describe('Basic Jest Test', () => {
     });
   });
   //*************************************************ensure jest library test */
-
-  //const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
   
   jest.mock('axios'); //******mock API call 
   jest.setTimeout(10000);
-  /**
-   * npm install i
-  npm uninstall axios
-  npm install axios@0.27.2 //import axios only works here
-  npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
-  npm install matchmedia-polyfill --save-dev
-  npm install react-router-dom
-   * npm test to run
-   * 
-   */
+
   describe('RecipeSearch Component Tests:', () => {
     afterEach(() => {
       jest.clearAllMocks();

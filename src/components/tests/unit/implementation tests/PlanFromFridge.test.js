@@ -6,12 +6,6 @@ import MockAdapter from 'axios-mock-adapter';
 import MultimodalPrompt from "../../../PlanFromYourFridge/PlanFromFridge";
 
 require('dotenv').config();
-/**
- * npm install axios-mock-adapter --save-dev
- * npm install dotenv
- * 
- * uses spoonacular after, RecipeSearch.test.js applied
- */
 
 describe('PlanFromFridge Component Tests', ()=> {
     let mock;

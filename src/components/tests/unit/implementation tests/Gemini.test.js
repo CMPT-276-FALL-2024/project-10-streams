@@ -2,11 +2,6 @@ import { render, screen } from '@testing-library/react';
 import MultimodalPrompt from '../../../PlanYourMeals/Gemini';
 import axios from 'axios';
 
-/**
- * npm install axios-mock-adapter --save-dev
- */
-
-
 jest.mock('axios'); 
 
 describe('MultimodalPrompt Component', () => {
