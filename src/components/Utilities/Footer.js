@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Footer component
 function Footer() {
     return (
         <footer className="bg-customRed text-white py-2">

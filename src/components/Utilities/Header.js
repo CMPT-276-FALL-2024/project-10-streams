@@ -2,6 +2,7 @@ import React from 'react';
 
 function Header() {
   return (
+    // Header component
     <header className="bg-customRed text-white p-6 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center"> 
@@ -9,7 +10,7 @@ function Header() {
           <img src="/img/PlanYourPlate-logo.png" alt="Logo" className="w-25 h-20 ml-2" />
         </div>
       </div>
-      
+      {/* Navigation */}
       <div className="container mx-auto mt-5">
         <nav className="flex space-x-4 border-b-2 border-slate-200 py-2">
           <ul className="flex space-x-6">

@@ -38,7 +38,7 @@ function MainContent() {
               <Tutorial />
             </>
           } />
-          <Route path="/plan-your-meals" element={<Gemini />} />
+          <Route path="/plan-your-meals" element={<Gemini />} /> //
           <Route path="/plan-your-recipes" element={<RecipeSearch />} />
           <Route path="/plan-from-your-fridge" element={<PlanFromFridge />} />
           <Route path="/about" element={<AboutUs />} />
