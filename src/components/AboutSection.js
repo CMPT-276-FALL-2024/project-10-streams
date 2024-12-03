@@ -11,7 +11,7 @@ function AboutSection() {
                 <p className="text-left text-purple-900 border-slate-200 border-4 rounded-lg p-5 w-2/3">
                     At PlanYourPlate, we are passionate about connecting individuals with recipes that match their needs.
                     We understand the struggle of striving for a healthier lifestyle despite a busy schedule, which is the inspiration behind our feature: 
-                    <span className="text-customRed animate-bounce"> PlanYourMeals</span>, <span className="text-orange-600 animate-bounce"> PlanYourRecipes</span>, 
+                    <span className="text-orange-600 animate-bounce"> PlanYourMeals</span>, <span className="text-orange-600 animate-bounce"> PlanYourRecipes</span>, 
                     and<span className="text-orange-600 animate-bounce"> PlanFromYourFridge</span>.
                     <br/><br/>
                     <p class="font-bold">Having trouble deciding what to make, but have an idea in mind?</p> 
