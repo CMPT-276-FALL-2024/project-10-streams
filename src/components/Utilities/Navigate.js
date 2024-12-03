@@ -29,7 +29,6 @@ const Navigate = () => {
       className={`fixed top-1/2 right-4 transform -translate-y-1/2 bg-purple-900 text-white px-4 py-2 rounded-lg shadow-lg transition-opacity duration-300 
         ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
     >
-      // Navigation links
       <nav className="flex flex-col items-center gap-4">
         <Link to="/" className="hover:text-purple-300">
           Home
