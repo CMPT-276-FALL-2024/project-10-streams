@@ -12,7 +12,7 @@ describe('Basic Jest Test', () => {
   });
   //*************************************************ensure jest library test */
 
-  const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
+  //const SPOONACULAR_API_KEY = process.env.REACT_APP_SPOONACULAR_API_KEY;
   
   jest.mock('axios'); //******mock API call 
   jest.setTimeout(10000);
