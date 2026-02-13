@@ -28,7 +28,7 @@ const MultimodalPrompt = () => {
       // Step 1: Ask Gemini for recipes and general advice
       const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
       const model = genAI.getGenerativeModel({
-        model: "gemini-1.5-flash",
+        model: "gemini-3-flash-preview",
         safetySettings: [
           {
             category: HarmCategory.HARM_CATEGORY_HARASSMENT,
@@ -182,9 +182,8 @@ const MultimodalPrompt = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full px-6 py-3 font-bold text-white rounded-lg transition ${
-                loading ? "bg-purple-300 cursor-not-allowed" : "bg-purple-600 hover:bg-purple-700"
-              }`}
+              className={`w-full px-6 py-3 font-bold text-white rounded-lg transition ${loading ? "bg-purple-300 cursor-not-allowed" : "bg-purple-600 hover:bg-purple-700"
+                }`}
             >
               {loading ? "Analyzing..." : "Get Recipes"}
             </button>
@@ -201,11 +200,11 @@ const MultimodalPrompt = () => {
 
         {/* Recipe Slider */}
         {recipes.length === 0 && done && loading === false && (
-            <div className="mt-8">
-              <p className="text-center text-lg text-purple-900">
-                No recipes found. Please try a new prompt.
-              </p>
-            </div>)}
+          <div className="mt-8">
+            <p className="text-center text-lg text-purple-900">
+              No recipes found. Please try a new prompt.
+            </p>
+          </div>)}
         {recipes.length === 1
           && (
             <div className="mt-8">
@@ -229,53 +228,53 @@ const MultimodalPrompt = () => {
               </div>
             </div>)}
         {recipes.length > 1 && (
-            <div className="mt-8">
-              <h3 className="text-center text-xl font-bold mb-4 text-purple-900">Recipes:</h3>
-              <Slider {...sliderSettings}>
-                {recipes.map((recipe) => (
-                  <div key={recipe.id} className="text-center p-4 bg-gray-100 border border-gray-300 rounded-lg shadow">
-                    <h4 className="text-lg text-purple-900 font-semibold text-center">{recipe.title}</h4>
-                    <img
-                      src={recipe.image}
-                      alt={recipe.title}
-                      className="w-full h-auto max-h-64 object-contain rounded-md mt-2"
-                    />
-                    <button
-                      onClick={() => fetchRecipeDetails(recipe.id)}
-                      className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg"
-                    >
-                      View Details
-                    </button>
-                  </div>
-                ))}
-              </Slider>
-            </div>
-          )}
+          <div className="mt-8">
+            <h3 className="text-center text-xl font-bold mb-4 text-purple-900">Recipes:</h3>
+            <Slider {...sliderSettings}>
+              {recipes.map((recipe) => (
+                <div key={recipe.id} className="text-center p-4 bg-gray-100 border border-gray-300 rounded-lg shadow">
+                  <h4 className="text-lg text-purple-900 font-semibold text-center">{recipe.title}</h4>
+                  <img
+                    src={recipe.image}
+                    alt={recipe.title}
+                    className="w-full h-auto max-h-64 object-contain rounded-md mt-2"
+                  />
+                  <button
+                    onClick={() => fetchRecipeDetails(recipe.id)}
+                    className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg"
+                  >
+                    View Details
+                  </button>
+                </div>
+              ))}
+            </Slider>
+          </div>
+        )}
 
 
         {/* Selected Recipe Details */}
         {selectedRecipe && (
-           <div className="mt-5 p-5 border border-gray-300 rounded">
-           <h2 className="text-xl font-bold mb-4">{selectedRecipe.title}</h2>
-           <p><strong>Servings:</strong> {selectedRecipe.servings}</p>
-           <p><strong>Ready in:</strong> {selectedRecipe.readyInMinutes} minutes</p>
-           <h3 className="text-lg font-semibold mt-4">Ingredients:</h3>
-           <ul className="list-disc list-inside">
-             {selectedRecipe.extendedIngredients.map((ingredient) => (
-               <li key={ingredient.id}>{ingredient.original}</li>
-             ))}
-           </ul>
-           <h3 className="text-lg font-semibold mt-4">Instructions:</h3>
-           <ol className="list-decimal list-inside">
-             {selectedRecipe.analyzedInstructions.length > 0 ? (
-               selectedRecipe.analyzedInstructions[0].steps.map((step) => (
-                 <li key={step.number}>{step.step}</li>
-               ))
-             ) : (
-               <li>{selectedRecipe.instructions}</li>
-             )}
-           </ol>
-         </div>
+          <div className="mt-5 p-5 border border-gray-300 rounded">
+            <h2 className="text-xl font-bold mb-4">{selectedRecipe.title}</h2>
+            <p><strong>Servings:</strong> {selectedRecipe.servings}</p>
+            <p><strong>Ready in:</strong> {selectedRecipe.readyInMinutes} minutes</p>
+            <h3 className="text-lg font-semibold mt-4">Ingredients:</h3>
+            <ul className="list-disc list-inside">
+              {selectedRecipe.extendedIngredients.map((ingredient) => (
+                <li key={ingredient.id}>{ingredient.original}</li>
+              ))}
+            </ul>
+            <h3 className="text-lg font-semibold mt-4">Instructions:</h3>
+            <ol className="list-decimal list-inside">
+              {selectedRecipe.analyzedInstructions.length > 0 ? (
+                selectedRecipe.analyzedInstructions[0].steps.map((step) => (
+                  <li key={step.number}>{step.step}</li>
+                ))
+              ) : (
+                <li>{selectedRecipe.instructions}</li>
+              )}
+            </ol>
+          </div>
         )}
       </div>
     </div>
