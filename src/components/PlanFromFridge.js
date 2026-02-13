@@ -37,7 +37,7 @@ const MultimodalPrompt = () => {
     try {
       const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
       const model = genAI.getGenerativeModel({
-        model: "gemini-1.5-flash",
+        model: "gemini-3-flash-preview",
         safetySettings: [
           {
             category: HarmCategory.HARM_CATEGORY_HARASSMENT,
@@ -72,8 +72,8 @@ const MultimodalPrompt = () => {
       const analyzedIngredients = buffer
         .join("")
         .toLowerCase()
-        .replace(/[*\n]/g, "") 
-        .split(", ")           
+        .replace(/[*\n]/g, "")
+        .split(", ")
         .map(ingredient => ingredient.trim());
 
       setIngredients(analyzedIngredients);
@@ -82,15 +82,15 @@ const MultimodalPrompt = () => {
       const sanitizedIngredients = analyzedIngredients.map(ingredient => ingredient.trim());
       console.log(sanitizedIngredients);
       const queryString = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${encodeURIComponent(
-      sanitizedIngredients.join(",")
+        sanitizedIngredients.join(",")
       )}&number=50&apiKey=${SPOONACULAR_API_KEY}&addRecipeInformation=true`;
-    
+
       const spoonacularResponse = await axios.get(queryString);
-    
+
       const filteredRecipes = spoonacularResponse.data
         .filter((recipe) => recipe.missedIngredients.length < 7)
         .slice(0, 5);
-    
+
       setRecipes(filteredRecipes);
     } catch (error) {
       console.error("Error:", error);
@@ -197,11 +197,11 @@ const MultimodalPrompt = () => {
 
         {/* Recipe Slider */}
         {recipes.length === 0 && done && loading === false && (
-            <div className="mt-8">
-              <p className="text-center text-lg text-purple-900">
-                No recipes found. Please try again with a different photo.
-              </p>
-            </div>)}
+          <div className="mt-8">
+            <p className="text-center text-lg text-purple-900">
+              No recipes found. Please try again with a different photo.
+            </p>
+          </div>)}
         {recipes.length === 1
           && (
             <div className="text-center mt-8">
